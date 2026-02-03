@@ -1,9 +1,9 @@
 import './App.css'
-import Login from './pages/Login/Login'
+import Auth from './pages/Login/Auth'
 
 function App() {
   return (
-      <Login></Login>
+      <Auth></Auth>
   )
 }
 
