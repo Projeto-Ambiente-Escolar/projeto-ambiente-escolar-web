@@ -16,6 +16,13 @@ function Auth() {
 
   return (
     <div className={`login-body ${isCadastro ? 'ativo' : ''}`}>
+
+        <div className='card-informacao'>
+            <h2>Cadastrado com Sucesso</h2>
+            <p>Espere a aprovação da secretaria</p>
+            <button id='buttom-1'>Ok</button>
+        </div>
+
       <div id="login-container" className={isCadastro ? 'ativo' : ''}>
 
         <div id='logo'>
