@@ -1,11 +1,39 @@
-import BarraSuperior from "../BarraSuperior/BarraSuperior"
+import BarraSuperior from "../../Components/BarraSuperior/BarraSuperior"
 import Foto from "../../../public/assets/foto_perfil.svg"
-
+import Filtro from "../../../public/assets/filter_icon.svg"
+import CardAluno from "../../Components/CardAluno/CardAluno"
+import "./Professor.css"
 
 function Professor() {
+
+    const alunos = [
+        { id:1, nome:"aluno"},
+        { id:1, nome:"aluno"},
+        { id:1, nome:"aluno"},
+        { id:1, nome:"aluno"},
+        { id:1, nome:"aluno"}
+
+    ]
+
     return (
-        <div>
+        <div className="professor-body">
             <BarraSuperior nome={"Professor Paulo"} foto={Foto}></BarraSuperior>
+            <div id="professor-content">
+                <div id="professor-search">
+                    <input type="text" placeholder="Buscar por Matrícula" id="search-input"/>
+                    <button id="buttom-filtrar">
+                        <img src={Filtro} width="20vh" />
+                    </button>
+                    <button id="buttom-buscar">Buscar</button>
+                </div>
+                <div id="professor-alunos">
+                    {
+                      alunos.map((aluno) => (
+                        <CardAluno></CardAluno>
+                      ))  
+                    }
+                </div>
+            </div>
         </div>
     )
 }

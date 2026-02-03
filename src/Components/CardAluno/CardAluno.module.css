@@ -1,0 +1,32 @@
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5vh;
+    padding: 2vh;
+    width: 30vh;
+    height: 40vh;
+    background-color: rgb(255, 255, 255);
+    filter: drop-shadow(0vh 0.8vh 0.7vh rgb(53, 53, 53));
+
+    border-radius: 4vh;
+    flex-direction: column;
+    gap: 2vh ;
+    img {
+        border-radius: 50%;
+        margin-bottom: 3vh;
+    }
+}
+
+#matricula {
+    color: var(--azul-escuro);
+}
+
+#status {
+    background-color: white;
+    border-radius: 3vh;
+    padding: 1.5vh;
+    width: 23vh;
+    color: var(--azul-escuro);
+    border: 0.3vh solid var(--azul-escuro);
+}

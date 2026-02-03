@@ -1,0 +1,52 @@
+#professor-content {
+    display: flex;
+    flex-direction: column;
+    padding-top: 5vh;
+    justify-content: center;
+}
+
+#professor-search {
+    gap: 4vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#search-input {
+    padding: 2vh;
+    border-radius: 4vh;
+    border: 0.3vh solid var(--azul-claro);
+    width: 120vh;
+}
+
+#buttom-buscar {
+    cursor: pointer;
+    background-color: var(--azul-escuro);
+    color: white;
+    border: none;
+    width: 15vh;
+    height: 6vh;
+
+    border-radius: 2.5vh;
+    padding: 1.5vh;
+    outline: 0;
+}
+
+#buttom-filtrar {
+    cursor: pointer;
+    background-color: white;
+    border: 0.3vh solid var(--azul-claro);
+    width: 15vh;
+    height: 6vh;
+
+    border-radius: 2.5vh;
+    padding: 1vh;
+    outline-style: none;
+}
+
+#professor-alunos {
+    width: 190vh;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
