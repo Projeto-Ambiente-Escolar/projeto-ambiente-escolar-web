@@ -1,9 +1,9 @@
 import './App.css'
-import Auth from './pages/Login/Auth'
+import AppRoutes from './routes'
 
 function App() {
   return (
-      <Auth></Auth>
+      <AppRoutes></AppRoutes>
   )
 }
 
