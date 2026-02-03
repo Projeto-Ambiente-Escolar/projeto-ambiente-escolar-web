@@ -7,12 +7,9 @@ import "./Professor.css"
 function Professor() {
 
     const alunos = [
-        { id:1, nome:"aluno"},
-        { id:1, nome:"aluno"},
-        { id:1, nome:"aluno"},
-        { id:1, nome:"aluno"},
-        { id:1, nome:"aluno"}
-
+        { id:1, nome:"Marcelo Paschoareli", matricula:"998900", status:"Em Revisão"},
+        { id:1, nome:"Marcelo Paschoareli", matricula:"998900", status:"Em Revisão"},
+        { id:1, nome:"Marcelo Paschoareli", matricula:"998900", status:"Em Revisão"},
     ]
 
     return (
@@ -29,7 +26,13 @@ function Professor() {
                 <div id="professor-alunos">
                     {
                       alunos.map((aluno) => (
-                        <CardAluno></CardAluno>
+                        <CardAluno
+                            id={aluno.id}
+                            foto={aluno.foto}
+                            nome={aluno.nome}
+                            matricula={aluno.matricula}
+                            status={aluno.status}
+                        ></CardAluno>
                       ))  
                     }
                 </div>
