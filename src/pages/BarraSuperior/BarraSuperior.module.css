@@ -2,6 +2,8 @@
     display: flex;
     justify-content: space-between;
     padding: 1.5vh;
+    padding-left: 3vh;
+    padding-right: 4vh;
     background: linear-gradient(to right, var(--azul-claro), var(--azul-escuro));
 }
 

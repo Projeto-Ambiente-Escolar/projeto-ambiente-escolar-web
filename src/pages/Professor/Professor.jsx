@@ -1,9 +1,11 @@
 import BarraSuperior from "../BarraSuperior/BarraSuperior"
+import Foto from "../../../public/assets/foto_perfil.svg"
+
 
 function Professor() {
     return (
         <div>
-            <BarraSuperior></BarraSuperior>
+            <BarraSuperior nome={"Professor Paulo"} foto={Foto}></BarraSuperior>
         </div>
     )
 }
