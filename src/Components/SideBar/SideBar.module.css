@@ -1,0 +1,27 @@
+.barContent {
+    width: 35vh; 
+    height: 100vh;
+    position: sticky;
+    top: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 6vh;
+
+    padding: 1.5vh 4vh 1.5vh 3vh;
+    background-color: var(--azul-escuro);
+
+    border-radius: 0vh 4vh 0vh 0vh;
+}
+
+#desempenho {
+    display: flex;
+     align-items: center;
+     gap: 2vh;
+
+     color: white;
+
+     font-weight: 300;
+     font-size: larger;
+}
