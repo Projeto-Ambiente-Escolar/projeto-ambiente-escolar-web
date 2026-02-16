@@ -1,0 +1,105 @@
+.professor-body {
+    display: flex;
+    height: 100vh;
+}
+
+#professor-content {
+    flex: 1; 
+    overflow-y: auto;
+    padding: 5vh;
+    padding-top: 0vh;
+}
+
+
+#professor-search {
+    gap: 4vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 10;
+    padding: 2vh 0;
+}
+
+#search-input {
+    padding: 2vh;
+    border-radius: 4vh;
+    border: 0.3vh solid var(--azul-claro);
+    width: 100%;
+
+    outline: none;
+
+    font-size: 2vh;
+}
+
+#buttom-buscar {
+    cursor: pointer;
+    background-color: var(--azul-escuro);
+    color: white;
+    border: none;
+    width: 15vh;
+    height: 6vh;
+
+    border-radius: 2.5vh;
+    padding: 1.5vh;
+    outline: 0;
+
+    font-size: 2vh;
+}
+
+#buttom-filtrar {
+    cursor: pointer;
+    background-color: white;
+    border: 0.3vh solid var(--azul-claro);
+    width: 15vh;
+    height: 6vh;
+
+    border-radius: 2.5vh;
+    padding: 1vh;
+    outline-style: none;
+}
+
+
+#professor-alunos {
+    width: 100%;
+    padding: 2vh;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#dropdown-content {
+    display: none;
+    position: absolute;
+    filter: drop-shadow(0vh 0.8vh 0.7vh rgb(53, 53, 53));
+    width: 15vh;
+    background-color: white;
+    border-radius: 2vh;
+    z-index: 100;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+#dropdown-content.ativo {
+    display: flex;
+}
+
+#drop-element {
+    background-color: white;
+    border: none;
+    padding: 1vh;
+    border-radius: 2vh;
+    cursor: pointer;
+}
+
+#drop-element:hover {
+    background: linear-gradient(to bottom, white, rgb(208, 205, 205));
+}
+
+
+#filtro {
+    width: 3.5vh;
+}
