@@ -6,22 +6,45 @@
 
     display: flex;
     flex-direction: column;
+    align-items: center;
 
-    gap: 6vh;
+    gap: 8vh;
 
     padding: 1.5vh 4vh 1.5vh 3vh;
     background-color: var(--azul-escuro);
 
     border-radius: 0vh 4vh 0vh 0vh;
+    
 }
 
-#desempenho {
+#imagem {
+    width: 25vh;
+}
+
+#navegadores {
     display: flex;
-     align-items: center;
-     gap: 2vh;
+    flex-direction: column;
+    gap: 2vh;
+}
 
-     color: white;
+.opcao {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 2vh;
+    padding: 1vh;
 
-     font-weight: 300;
-     font-size: larger;
+    color: white;
+
+    font-weight: 300;
+    font-size: 3vh;
+
+    img {
+        width: 3vh;
+    }
+}
+
+.ativo {
+    border-radius: 1vh;
+    background-color: #8BB8DD;
 }

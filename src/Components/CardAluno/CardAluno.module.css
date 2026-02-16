@@ -10,12 +10,19 @@
     background-color: rgb(255, 255, 255);
     filter: drop-shadow(0vh 0.8vh 0.7vh rgb(53, 53, 53));
 
+    font-size: 2.5vh;
+
     border-radius: 4vh;
     flex-direction: column;
     gap: 2vh ;
     img {
+        width: 15vh;
         border-radius: 50%;
         margin-bottom: 3vh;
+    }
+
+    button {
+        font-size: 2vh;
     }
 }
 
