@@ -1,0 +1,147 @@
+.overlay {
+    position: fixed;
+    inset: 0; 
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+}
+
+.cardnota {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    background-color: white;
+    z-index: 1000;
+
+    width: 90vh;
+    height: 70vh;
+    padding: 4.5vh;
+    border-radius: 2vh;
+    box-shadow: 0 1vh 3vh rgba(0,0,0,0.2);
+    
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+
+}
+
+#info {
+    font-size: 2.5vh;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2.5vh;
+    justify-content: center;
+
+    img {
+        width: 25vh;
+    }
+}
+
+#nome {
+    color: var(--cinza-escuro);
+}
+
+#matricula {
+    color: var(--azul-escuro);
+}
+
+.enviar {
+    cursor: pointer;
+    background-color: var(--azul-escuro);
+    color: white;
+    border: none;
+    width: 23vh;
+    height: 6vh;
+
+    border-radius: 2.5vh;
+    padding: 1.5vh;
+    outline: 0;
+
+    font-size: 2vh;
+}
+
+.inativo {
+    cursor: auto;
+    background-color: #2fbce779;
+}
+
+
+#nota {
+    p {
+        margin-left: 2vh;
+    }
+}
+
+#lancamento {
+    margin-top: 2vh;
+    color: var(--cinza-escuro);
+    font-size: 2vh;
+}
+
+#primeira {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+   
+    align-items: center;
+}
+
+#inputnota {
+    padding: 2vh;
+    border-radius: 4vh;
+    border: 0.3vh solid var(--azul-escuro);
+    background-color: #4693d13a;
+    width: 100%;
+
+    outline: none;
+
+    font-size: 2vh;
+
+    text-align: center;
+    color: black;
+}
+
+#meio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3vh;
+}
+
+#calcular {
+    cursor: pointer;
+    background-color: var(--azul-escuro);
+    color: white;
+    border: none;
+    width: 100%;
+    height: 5vh;
+
+    border-radius: 2.5vh;
+    padding: 1.5vh;
+    outline: 0;
+
+    font-size: 2vh;
+    margin-top: 2vh;
+}
+
+#quarta {
+    margin-top: 2vh;
+
+}
+
+#inputobservacao {
+    padding: 2vh;
+    border-radius: 4vh;
+    border: 0.3vh solid var(--azul-escuro);
+    background-color: #4693d13a;
+    width: 100%;
+    height: 19vh;
+
+    outline: none;
+
+    font-size: 2vh;
+    text-align: justify;
+
+    color: black;
+    resize: none;
+}

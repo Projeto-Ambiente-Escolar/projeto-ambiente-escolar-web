@@ -1,0 +1,44 @@
+.dropdown {
+    position: relative;
+    width: 250px;
+}
+
+.header {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 3vh;
+    padding: 1.5vh;
+    width: 23vh;
+    height: 6vh;
+    color: var(--azul-escuro);
+    border: 0.3vh solid var(--azul-escuro);
+}
+
+.lista {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 24vh;
+    background: white;
+    margin-top: 1vh;
+    overflow-y: auto;
+    z-index: 1000;
+    max-height: 25vh;
+    filter: drop-shadow(0vh 0.8vh 0.7vh rgb(53, 53, 53));
+    border-radius: 2vh;
+
+    color: var(--cinza-escuro);
+    font-weight: 400;
+}
+
+.item {
+    padding: 1vh;
+    cursor: pointer;
+}
+
+.item:hover {
+    background: #f0f0f0;
+}

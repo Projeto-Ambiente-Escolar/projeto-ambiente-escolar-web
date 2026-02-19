@@ -4,7 +4,7 @@ import { useState } from "react"
 import "./Notas.css"
 
 
-function Notas() {
+function Notas({idturma, visualizar}) {
 
     const [matricula, setMatricula] = useState("")
     const [termoFiltrado, setTermoFiltrado] = useState("");
@@ -24,9 +24,7 @@ function Notas() {
 
     const handleBuscar = () => {
         setTermoFiltrado(matricula);
-        console.log(ordem)
     };    
-
 
     return (
         <div id="professor-content">
@@ -40,7 +38,7 @@ function Notas() {
             <img src={Filtro} id="filtro"/>
             </button>
             <div id="dropdown-content" className={mostrarDropdown ? "ativo" : ""}>
-                    <button id="drop-element" onClick={() => {setOrdem(1); console.log(ordem)}}>A-Z</button>
+                    <button id="drop-element" onClick={() => setOrdem(1)}>A-Z</button>
                     <button id="drop-element" onClick={() => setOrdem(-1)}>Z-A</button>
                 </div>
             </div>
@@ -63,6 +61,7 @@ function Notas() {
                             nome={aluno.nome}
                             matricula={aluno.matricula}
                             status={aluno.status}
+                            abrir={visualizar}
                         ></CardAluno>
                       ))  
                     }

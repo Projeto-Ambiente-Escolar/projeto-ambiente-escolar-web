@@ -1,9 +1,9 @@
 import style from "./CardAluno.module.css"
 import Foto from "../../../public/assets/foto_perfil_1.svg"
 
-function CardAluno({id, foto, nome, matricula, status}) {
+function CardAluno({id, foto, nome, matricula, status, abrir}) {
     return (
-        <div className={style.content}>
+        <div className={style.content} onClick={abrir}>
                 <img src={foto? foto : Foto} width="110vh"/>
                 <div>
                     <p>{nome.slice(0, 22)}</p>

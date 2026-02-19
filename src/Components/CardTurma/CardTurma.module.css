@@ -1,0 +1,20 @@
+.content {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3vh;
+    padding: 2vh;
+    width: 30vh;
+    height: 30vh;
+    background-color: rgb(255, 255, 255);
+    border: 0.3vh solid var(--azul-escuro);
+
+    color: var(--azul-escuro);
+
+    font-size: 2.5vh;
+
+    border-radius: 4vh;
+    flex-direction: column;
+    gap: 2vh ;
+}

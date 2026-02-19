@@ -1,7 +1,17 @@
+.professor-body {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
 #conteudo-professor {
+    flex: 1;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
+
+
 
 #header-professor {
     display: flex;
@@ -19,4 +29,3 @@
     object-fit: cover;
     border-radius: 50%;
 }
-
