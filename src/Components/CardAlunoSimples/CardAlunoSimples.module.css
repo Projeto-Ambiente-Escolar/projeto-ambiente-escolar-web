@@ -1,30 +1,25 @@
-.content {
-    cursor: pointer;
+.aluno_card {
+     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 5vh;
+    margin: 3vh;
+
     padding: 2vh;
     width: 30vh;
-    height: 40vh;
+    height: 30vh;
     background-color: rgb(255, 255, 255);
     filter: drop-shadow(0vh 0.8vh 0.7vh rgb(53, 53, 53));
-
     color: var(--cinza-escuro);
 
     font-size: 2.5vh;
 
     border-radius: 4vh;
     flex-direction: column;
-    gap: 2vh ;
     img {
         width: 15vh;
         border-radius: 50%;
         margin-bottom: 3vh;
-    }
-
-    button {
-        font-size: 2vh;
     }
 }
 
@@ -32,11 +27,8 @@
     color: var(--azul-escuro);
 }
 
-#status {
-    background-color: white;
-    border-radius: 3vh;
-    padding: 1.5vh;
-    width: 23vh;
-    color: var(--azul-escuro);
-    border: 0.3vh solid var(--azul-escuro);
+.ativo {
+    background-color: #f1f1f1;
 }
+
+

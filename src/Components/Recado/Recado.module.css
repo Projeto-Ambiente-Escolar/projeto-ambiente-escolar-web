@@ -1,0 +1,28 @@
+.aluno_card {
+    display: flex;
+    align-items: start;
+    margin: 3vh;
+
+    padding: 3vh;
+    width: 100%;
+    min-height: 15vh;
+    background-color: rgb(255, 255, 255);
+    filter: drop-shadow(0vh 0.8vh 0.7vh rgb(53, 53, 53));
+    color: var(--cinza-escuro);
+
+    font-size: 2vh;
+    
+
+    border-radius: 4vh;
+    flex-direction: column;
+}
+
+#matricula {
+    color: var(--azul-escuro);
+}
+
+.aluno_card {
+    overflow-wrap: anywhere;
+}
+
+

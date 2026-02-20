@@ -1,0 +1,91 @@
+#recados_content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 5vh;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#recados_search {
+    gap: 4vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 10;
+    padding: 2vh 0;
+}
+
+#recados_division {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+
+    flex: 1; 
+    overflow: hidden;
+}
+
+#alunos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-top: 3vh;
+
+    -ms-overflow-style: none;
+
+}
+
+#mural {
+    margin: 3vh;
+    margin-left: 0;
+    border: 0.3vh solid var(--azul-claro);
+    background-color: #fff;
+    border-radius: 2vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    overflow-y: auto;
+    padding: 4vh;
+    gap: 2vh;
+    font-size: 2vh;
+}
+
+#mural::-webkit-scrollbar {
+    display: none;
+}
+
+#alunos::-webkit-scrollbar {
+    display: none;
+}
+
+#mural {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.criar {
+    cursor: pointer;
+    background-color: var(--azul-escuro);
+    color: white;
+    border: none;
+    width: 100%;
+    height: 5vh;
+    border-radius: 2.5vh;
+    padding: 1.5vh;
+    outline: 0;
+
+    font-size: 2vh;
+    margin-top: 2vh;
+}
+
+.ativo {
+    background-color: #4693d13a;
+}

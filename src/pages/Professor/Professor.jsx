@@ -5,6 +5,8 @@ import { useState } from "react";
 import Foto from "../../../public/assets/foto_perfil_1.svg"
 import CardNota from "../../Components/CardNota/CardNota";
 import Turmas from "../Turma/Turmas";
+import Recados from "../Recados/Recados";
+import CardRecado from "../../Components/CardRecado/CardRecado";
 
 
 function Professor() {
@@ -17,19 +19,29 @@ function Professor() {
 
     const [turma, setTurma] = useState(0)
 
-    const [mostrarCard, setMostrarCard] = useState(false)
+    const [mostrarCardNota, setMostrarCardNota] = useState(false)
+
+    const [mostrarCardRecado, setMostrarCardRecado] = useState(false)
+
+    const [aluno, setAluno] = useState()
+   
 
     const trocarAba = (novaAba) => {
     setAba(novaAba)
     setSelecionar(false)}
     
     const abrir = () => {
-        setMostrarCard(true)
+        setMostrarCardNota(true)
     }
 
     const escolher = (id) =>{
         setSelecionar(true)
         setTurma(id)
+    }
+
+    const abrirRecado = (id) =>{
+        setAluno(id)
+        setMostrarCardRecado(true)
     }
 
     return (
@@ -45,10 +57,14 @@ function Professor() {
                         ? <Turmas definir={escolher}/> 
                         : <Notas idturma={turma} visualizar={abrir}/>
                 )}
+
+                {aba === "recado" && <Recados abrir={abrirRecado}/>}
                 
             </div>
 
-            {mostrarCard && <CardNota fechar={() => setMostrarCard(false)} />}
+            {mostrarCardNota && <CardNota fechar={() => setMostrarCardNota(false)} />}
+
+            {mostrarCardRecado && <CardRecado id={aluno} fechar={() => setMostrarCardRecado(false)} />}
         </div>
     )
 }
