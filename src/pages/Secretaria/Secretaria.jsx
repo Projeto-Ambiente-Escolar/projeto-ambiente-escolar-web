@@ -1,5 +1,4 @@
 import { useState } from "react";
-import SideBar from "../SideBar/Sidebar";
 import Foto from "../../../public/assets/foto_perfil.svg";
 import styles from "./Secretaria.module.css";
 
@@ -26,8 +25,9 @@ function Secretaria() {
         aluno.matricula.includes(matriculaBusca)
     );
 
-    const handleBuscar = () => {
-        setMatriculaBusca(inputBusca);
+    const handleBuscar = (valorDireto) => {
+        const termo = valorDireto !== undefined ? valorDireto : inputBusca;
+        setMatriculaBusca(termo);
         setSelecionados([]);
     };
 
@@ -63,7 +63,10 @@ function Secretaria() {
 
     return (
         <div>
-            <BarraSuperior nome="Super Admin" foto={Foto} />
+            <div className={styles.header}>
+                <p>Super Admin</p>
+                <img src={Foto} className={styles.fotoPerfil} />
+            </div>
 
             <SearchBar
                 inputBusca={inputBusca}

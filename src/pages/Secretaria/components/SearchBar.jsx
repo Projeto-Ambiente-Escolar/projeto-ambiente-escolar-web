@@ -5,14 +5,15 @@ function SearchBar({ inputBusca, setInputBusca, onBuscar }) {
         <div id={styles.searchContainer}>
             <input
                 className={styles.searchInput}
-                type="number"
+                type="text"
                 placeholder="Buscar por matrícula"
                 value={inputBusca}
-                onChange={(e) => setInputBusca(e.target.value)}
+                onChange={(e) => {
+                    setInputBusca(e.target.value);
+                    if (e.target.value === "") onBuscar(""); 
+                }}
                 onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                        onBuscar();
-                    }
+                    if (e.key === "Enter") onBuscar();
                 }}
             />
 

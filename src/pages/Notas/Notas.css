@@ -10,6 +10,14 @@
     padding-top: 0vh;
 }
 
+.titulo-professor {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #333;
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-top: 2rem;
+}
 
 #professor-search {
     gap: 4vh;

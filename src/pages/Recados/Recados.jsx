@@ -28,8 +28,20 @@ function Recados({abrir}) {
 
     return (
         <div id={styles.recados_content}>
+            <h3 className={styles.titulo}>Recados</h3>
             <div id={styles.recados_search}>
-                    <input type="text" placeholder="Buscar por matrícula ou nome" id="search-input" onChange={(e) => {setMatricula(e.target.value); if(e.target.value === "") setTermoFiltrado("");}}/>
+                    <input 
+                        type="text" 
+                        placeholder="Buscar por matrícula ou nome" 
+                        id="search-input" 
+                        onChange={(e) => {
+                            setMatricula(e.target.value);
+                            if (e.target.value === "") setTermoFiltrado("");
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") handleBuscar();
+                        }}
+                    />
                     <button id="buttom-buscar" onClick={handleBuscar}>Buscar</button>
             </div>
             <div id={styles.recados_division}>

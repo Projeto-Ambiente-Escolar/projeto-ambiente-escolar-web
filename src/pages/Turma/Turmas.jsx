@@ -14,6 +14,7 @@ function Turmas({definir}) {
 
     return (
         <div id={styles.turmas_content}>
+            <h3 className={styles.titulo}>Minhas Turmas</h3>
             <div id={styles.turmas_search}>
                 <div>
                     <button

@@ -1,4 +1,4 @@
-import Sidebar from "../Sidebar/Sidebar.jsx";
+import Sidebar from "../../Components/SideBar/SideBar";
 import Foto from "../../../public/assets/foto_perfil.svg";
 import styles from "./Notas.module.css";
 import html2pdf from "html2pdf.js";

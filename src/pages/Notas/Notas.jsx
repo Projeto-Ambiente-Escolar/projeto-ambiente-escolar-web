@@ -28,9 +28,20 @@ function Notas({idturma, visualizar}) {
 
     return (
         <div id="professor-content">
+                <h3 className="titulo-professor">Lançar Notas</h3>
                 <div id="professor-search">
-                    <input type="text" placeholder="Buscar por matrícula" id="search-input" onChange={(e) => {setMatricula(e.target.value); if(e.target.value === "") setTermoFiltrado("");}}/>
-                    <div>
+                    <input 
+                        type="text" 
+                        placeholder="Buscar por matrícula" 
+                        id="search-input" 
+                        onChange={(e) => {
+                            setMatricula(e.target.value);
+                            if (e.target.value === "") setTermoFiltrado("");
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") handleBuscar();
+                        }}
+                    />                    <div>
                     <button
             id="buttom-filtrar"
             onClick={() => setMostrarDropdown(!mostrarDropdown)}
