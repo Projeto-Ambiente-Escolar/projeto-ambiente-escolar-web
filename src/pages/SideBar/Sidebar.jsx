@@ -1,3 +1,4 @@
+import { Link, useLocation } from "react-router-dom"
 import styles from "./Sidebar.module.css"
 import { menuConfig } from "./menuConfig"
 import Logo from "../../../public/assets/logooo.svg"
@@ -5,6 +6,7 @@ import Foto from "../../../public/assets/foto_perfil.svg"
 
 function Sidebar({ nome, foto, tipo }) {
     const menu = menuConfig[tipo] || []
+    const location = useLocation()
 
     return (
         <aside className={styles.sidebar}>
@@ -16,11 +18,16 @@ function Sidebar({ nome, foto, tipo }) {
             <nav className={styles.menu}>
                 {menu.map((item) => {
                     const Icon = item.icon
+                    const ativo = location.pathname === item.rota
                     return (
-                        <button key={item.label} className={styles.item}>
+                        <Link
+                            key={item.label}
+                            to={item.rota}
+                            className={`${styles.item} ${ativo ? styles.ativo : ""}`}
+                        >
                             <Icon className={styles.icon} />
                             <span>{item.label}</span>
-                        </button>
+                        </Link>
                     )
                 })}
             </nav>

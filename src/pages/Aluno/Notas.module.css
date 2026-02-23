@@ -5,7 +5,7 @@
     border-collapse: separate;
     border-spacing: 0;
     font-family: Arial, sans-serif;
-    border-radius: 12px;
+    border-radius: 6px;
     overflow: hidden;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     font-size: medium;
@@ -19,25 +19,26 @@
 }
 
 .tabela thead tr th:first-child {
-    border-top-left-radius: 12px;
+    border-top-left-radius: 6px;
 }
 
 .tabela thead tr th:last-child {
-    border-top-right-radius: 12px;
+    border-top-right-radius: 6px;
 }
 
 .tabela td {
     padding: 10px;
     text-align: center;
-    border: 0.5px solid #c2bfbf;
+    border-top: 0.5px solid #c2bfbf;
+    border-bottom: 0.5px solid #c2bfbf;
 }
 
 .tabela tbody tr:last-child td:first-child {
-    border-bottom-left-radius: 12px;
+    border-bottom-left-radius: 6px;
 }
 
 .tabela tbody tr:last-child td:last-child {
-    border-bottom-right-radius: 12px;
+    border-bottom-right-radius: 6px;
 }
 
 .tabela tbody tr:nth-child(even) {
@@ -49,19 +50,21 @@
 }
 
 .aprovado {
-    color: #2ecc71;
+    color: #1a7a3f;
     font-weight: bold;
 }
 
 .reprovado {
-    color: #e74c3c;
+    color: #b71c1c;
     font-weight: bold;
 }
 
 .titulo {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #333;
     text-align: center;
-    margin: 20px 0;
-    font-weight: lighter;
+    margin-bottom: 2rem;
 }
 
 .pdf {
@@ -75,7 +78,7 @@
     align-items: center;
     gap: 8px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 300;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
 }
