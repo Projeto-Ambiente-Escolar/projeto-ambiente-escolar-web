@@ -38,9 +38,10 @@ function Auth() {
           body: JSON.stringify({ email: credenciais, senha: senha2 }),
         })
 
-        if (!response.ok) throw new Error('Credenciais inválidas.')
+        const text = await response.text()
+        if (!response.ok || !text) throw new Error('E-mail ou senha inválidos.')
 
-        const data = await response.json()
+        const data = JSON.parse(text)
         Cookies.set('usuario', JSON.stringify({ ...data, tipo: 'aluno' }), { expires: 1 })
         navigate('/notas')
       } else {
@@ -50,9 +51,10 @@ function Auth() {
           body: JSON.stringify({ email: credenciais, senha: senha2 }),
         })
 
-        if (!response.ok) throw new Error('Credenciais inválidas.')
+        const text = await response.text()
+        if (!response.ok || !text) throw new Error('Usuário ou senha inválidos.')
 
-        const data = await response.json()
+        const data = JSON.parse(text)
         Cookies.set('usuario', JSON.stringify({ ...data, tipo: 'professor' }), { expires: 1 })
         navigate('/turmas')
       }
