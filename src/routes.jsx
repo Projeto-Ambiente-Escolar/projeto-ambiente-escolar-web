@@ -5,6 +5,7 @@ import Notas from "./pages/Aluno/Notas"
 import Secretaria from "./pages/Secretaria/Secretaria"
 import Observacoes from "./pages/Aluno/Observacoes"
 import Disciplinas from "./pages/Aluno/Disciplinas"
+import Desempenho from "./pages/Desempenho/Desempenho"
 
 
 function AppRoutes() {
@@ -16,6 +17,7 @@ function AppRoutes() {
                 <Route path="/turmas" element={<Professor></Professor>}></Route>
                 <Route path="/lancar-notas" element={<Professor></Professor>}></Route>
                 <Route path="/recados" element={<Professor></Professor>}></Route>
+                <Route path="/desempenho" element={<Professor></Professor>}></Route>
                 <Route path="/notas" element={<Notas></Notas>}></Route>
                 <Route path="/secretaria" element={<Secretaria></Secretaria>}></Route>
                 <Route path="/observacoes" element={<Observacoes></Observacoes>}></Route>

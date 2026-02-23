@@ -8,6 +8,7 @@ import Turmas from "../Turma/Turmas";
 import Recados from "../Recados/Recados";
 import CardRecado from "../../Components/CardRecado/CardRecado";
 import { useLocation, Navigate } from "react-router-dom";
+import Desempenho from "../Desempenho/Desempenho";
 
 
 function Professor() {
@@ -64,6 +65,8 @@ function Professor() {
                         ? <Turmas definir={escolher}/>
                         : <Notas idturma={turma} visualizar={abrir}/>
                 )}
+
+                {aba === "/desempenho" && <Desempenho abrir={Desempenho}/>}
 
                 {aba === "/recados" && <Recados abrir={abrirRecado}/>}
                 
