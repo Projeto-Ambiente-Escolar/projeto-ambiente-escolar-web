@@ -23,6 +23,11 @@ export const menuConfig = {
             icon: "/assets/lancar_icon.svg"
         },
         {
+            label: "Desempenho",
+            rota: "/desempenho",
+            icon: "/assets/recado_icon.svg"
+        },
+        {
             label: "Lançar Notas",
             rota: "/lancar-notas",
             icon: "/assets/recado_icon.svg"
