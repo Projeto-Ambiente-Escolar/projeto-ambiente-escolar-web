@@ -1,5 +1,5 @@
 import { useState } from "react";
-import BarraSuperior from "../BarraSuperior/BarraSuperior";
+import SideBar from "../SideBar/Sidebar";
 import Foto from "../../../public/assets/foto_perfil.svg";
 import styles from "./Secretaria.module.css";
 

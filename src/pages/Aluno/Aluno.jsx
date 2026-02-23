@@ -1,4 +1,4 @@
-import BarraSuperior from "../BarraSuperior/BarraSuperior";
+import Sidebar from "../SideBar/Sidebar.jsx";
 import Foto from "../../../public/assets/foto_perfil.svg";
 import styles from "./Aluno.module.css";
 import html2pdf from "html2pdf.js";
@@ -27,7 +27,7 @@ function TabelaNotas() {
 
     return (
         <div>
-            <BarraSuperior nome="Leonardo Lins" foto={Foto} />
+            <Sidebar nome="Leonardo Lins"/>
 
             <div id="boletim-pdf">
                 <h1 className={styles.titulo}>Boletim</h1>

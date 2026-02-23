@@ -33,7 +33,9 @@ function Auth() {
           <div id="login-title-2">
             <div>
               <h1>Aluno</h1>
-              <p>Seja Bem Vindo de Volta!</p>
+              <p style={{
+                fontWeight: 'lighter'
+              }}> Seja Bem Vindo de Volta!</p>            
             </div>
 
             <div id="login-inputs-2">
@@ -51,8 +53,9 @@ function Auth() {
         <div id="login-content">
           <div id="login-title">
             <h1>Aluno</h1>
-            <p>Cadastrar</p>
-          </div>
+              <p style={{
+                fontWeight: 'lighter'
+              }}> Cadastrar </p>          </div>
 
           <div id="login-inputs">
             <input id="input-1" placeholder="Nome Completo" value={nome} onChange={(e) => setNome(e.target.value)} />

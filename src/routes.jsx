@@ -3,6 +3,7 @@ import Auth from "./pages/Login/Auth"
 import Professor from "./pages/Professor/Professor"
 import Aluno from "./pages/Aluno/Aluno"
 import Secretaria from "./pages/Secretaria/Secretaria"
+import Observacoes from "./pages/Aluno/Observacoes"
 
 
 function AppRoutes() {
@@ -13,6 +14,7 @@ function AppRoutes() {
                 <Route path="/professor" element={<Professor></Professor>}></Route>
                 <Route path="/aluno" element={<Aluno></Aluno>}></Route>
                 <Route path="/secretaria" element={<Secretaria></Secretaria>}></Route>
+                <Route path="/observacoes" element={<Observacoes></Observacoes>}></Route>
             </Routes>
         </BrowserRouter>
     )
