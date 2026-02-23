@@ -1,30 +1,42 @@
 .barContent {
     width: 35vh; 
+    min-width: 220px;
     height: 100vh;
     position: sticky;
     top: 0;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-
     gap: 8vh;
-
     padding: 1.5vh 4vh 1.5vh 3vh;
     background-color: var(--azul-escuro);
-
     border-radius: 0vh 4vh 0vh 0vh;
-    
 }
 
-#imagem {
-    width: 25vh;
+.topo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    color: white;
 }
 
-#navegadores {
+.topo h2 {
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.imagem {
+    width: 26vh;
+    min-width: 40px;
+}
+
+.navegadores {
     display: flex;
     flex-direction: column;
     gap: 2vh;
+    width: 100%;
 }
 
 .opcao {
@@ -33,18 +45,42 @@
     align-items: center;
     gap: 2vh;
     padding: 1vh;
-
+    border-radius: 1vh;
     color: white;
-
     font-weight: 300;
     font-size: 3vh;
+    text-decoration: none;
+    transition: background 0.3s;
+}
 
-    img {
-        width: 3vh;
-    }
+.opcao:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.icone {
+    width: 3vh;
+    min-width: 20px;
+    height: 3vh;
+    min-height: 20px;
+    object-fit: contain;
 }
 
 .ativo {
     border-radius: 1vh;
     background-color: #8BB8DD;
+}
+
+.perfil {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+    margin-top: auto;
+}
+
+.fotoPerfil {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
 }

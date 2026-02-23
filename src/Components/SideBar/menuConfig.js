@@ -1,37 +1,36 @@
-import { 
-    FaClipboardList, 
-    FaBook, 
-    FaGraduationCap 
-} from "react-icons/fa";
-
 export const menuConfig = {
     aluno: [
         {
             label: "Observações",
             rota: "/observacoes",
-            icon: FaClipboardList
+            icon: "/assets/recado_icon.svg"
         },
         {
             label: "Notas",
             rota: "/notas",
-            icon: FaGraduationCap
+            icon: "/assets/desempenho_icon.svg"
         },
         {
             label: "Disciplinas",
             rota: "/disciplinas",
-            icon: FaBook
+            icon: "/assets/lancar_icon.svg"
         },
     ],
     professor: [
         {
             label: "Minhas Turmas",
             rota: "/turmas",
-            icon: FaBook
+            icon: "/assets/lancar_icon.svg"
         },
         {
             label: "Lançar Notas",
             rota: "/lancar-notas",
-            icon: FaClipboardList
+            icon: "/assets/recado_icon.svg"
+        },
+        {
+            label: "Recados",
+            rota: "/recados",
+            icon: "/assets/recado_icon.svg"
         },
     ]
 };

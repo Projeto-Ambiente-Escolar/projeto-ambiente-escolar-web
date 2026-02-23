@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Sidebar from "../Sidebar/Sidebar";
+import Sidebar from "../../Components/SideBar/SideBar";
 import DisciplinaItemCard from "./components/DisciplinaItemCard";
 import styles from "./Disciplinas.module.css";
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../Sidebar/Sidebar";
+import Sidebar from "../../Components/SideBar/SideBar";
 import DisciplinaCard from "./components/DisciplinaCard";
 import ObservacaoModal from "./components/ObservacaoModal";
 import styles from "./Observacoes.module.css";
