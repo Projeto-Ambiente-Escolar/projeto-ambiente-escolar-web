@@ -87,13 +87,13 @@ function Auth() {
 
             <div id="login-inputs-2">
               <input
-                id="input-1"
+                className="input-1"
                 placeholder="E-mail / Usuário"
                 value={credenciais}
                 onChange={(e) => setCredenciais(e.target.value)}
               />
               <input
-                id="input-1"
+                className="input-1"
                 type="password"
                 placeholder="Senha"
                 value={senha2}
@@ -118,10 +118,10 @@ function Auth() {
           </div>
 
           <div id="login-inputs">
-            <input id="input-1" placeholder="Nome Completo" value={nome} onChange={(e) => setNome(e.target.value)} />
-            <input id="input-1" placeholder="Matrícula" value={matricula} onChange={(e) => setMatricula(e.target.value)} />
-            <input id="input-1" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input id="input-1" type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
+            <input className="input-1" placeholder="Nome Completo" value={nome} onChange={(e) => setNome(e.target.value)} />
+            <input className="input-1" placeholder="Matrícula" value={matricula} onChange={(e) => setMatricula(e.target.value)} />
+            <input className="input-1" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input className="input-1" type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
           </div>
 
           <div id="login-informations">

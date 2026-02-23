@@ -2,7 +2,7 @@ import styles from "../Secretaria.module.css";
 
 function SearchBar({ inputBusca, setInputBusca, onBuscar }) {
     return (
-        <div id={styles.searchContainer}>
+        <div className={styles.searchContainer}>
             <input
                 className={styles.searchInput}
                 type="text"
