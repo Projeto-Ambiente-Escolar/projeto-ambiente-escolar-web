@@ -1,18 +1,36 @@
+import { useEffect, useState } from "react";
 import Sidebar from "../../Components/SideBar/SideBar";
 import Cookies from "js-cookie";
 import styles from "./Notas.module.css";
 import html2pdf from "html2pdf.js";
+import { buscarTabelaNotas } from "../../services/alunoService";
 
 function TabelaNotas() {
     const cookieData = Cookies.get('usuario')
-    const usuario = cookieData ? JSON.parse(cookieData) : { nome: '', foto: null }
+    const usuario = cookieData ? JSON.parse(cookieData) : { nome: '', foto: null, id: null }
 
-    const notas = [
-        { disciplina: "Matemática", n1: 8.5, n2: 9.0 },
-        { disciplina: "Português", n1: 7.0, n2: 8.0 },
-        { disciplina: "História", n1: 6.0, n2: 6.5 },
-        { disciplina: "Geografia", n1: 9.0, n2: 8.5 }
-    ];
+    const [notas, setNotas] = useState([]);
+    const [carregando, setCarregando] = useState(true);
+    const [erro, setErro] = useState(null);
+
+    useEffect(() => {
+        if (!usuario.id) {
+            setErro("Usuário não identificado.");
+            setCarregando(false);
+            return;
+        }
+
+        buscarTabelaNotas(usuario.id)
+            .then((data) => {
+                setNotas(data);
+            })
+            .catch(() => {
+                setErro("Erro ao carregar as notas. Tente novamente.");
+            })
+            .finally(() => {
+                setCarregando(false);
+            });
+    }, [usuario.id]);
 
     function gerarPDF() {
         const elemento = document.getElementById("boletim-pdf");
@@ -36,36 +54,40 @@ function TabelaNotas() {
                 <div id="boletim-pdf">
                     <h3 className={styles.titulo}>Boletim</h3>
 
-                    <table className={styles.tabela}>
-                        <thead>
-                            <tr>
-                                <th>Disciplina</th>
-                                <th>Nota 1</th>
-                                <th>Nota 2</th>
-                                <th>Média</th>
-                                <th>Situação</th>
-                            </tr>
-                        </thead>
+                    {carregando && <p style={{ textAlign: "center" }}>Carregando notas...</p>}
+                    {erro && <p style={{ textAlign: "center", color: "#b71c1c" }}>{erro}</p>}
 
-                        <tbody>
-                            {notas.map((item, index) => {
-                                const media = ((item.n1 + item.n2) / 2).toFixed(2);
-                                const aprovado = media >= 7;
+                    {!carregando && !erro && (
+                        <table className={styles.tabela}>
+                            <thead>
+                                <tr>
+                                    <th>Disciplina</th>
+                                    <th>Nota 1</th>
+                                    <th>Nota 2</th>
+                                    <th>Média</th>
+                                    <th>Situação</th>
+                                </tr>
+                            </thead>
 
-                                return (
-                                    <tr key={index}>
-                                        <td>{item.disciplina}</td>
-                                        <td>{item.n1}</td>
-                                        <td>{item.n2}</td>
-                                        <td>{media}</td>
-                                        <td className={aprovado ? styles.aprovado : styles.reprovado}>
-                                            {aprovado ? "Aprovado" : "Reprovado"}
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
+                            <tbody>
+                                {notas.map((item, index) => {
+                                    const aprovado = item.media >= 7;
+
+                                    return (
+                                        <tr key={index}>
+                                            <td>{item.disciplina}</td>
+                                            <td>{item.nota1}</td>
+                                            <td>{item.nota2}</td>
+                                            <td>{item.media}</td>
+                                            <td className={aprovado ? styles.aprovado : styles.reprovado}>
+                                                {aprovado ? "Aprovado" : "Reprovado"}
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    )}
                 </div>
 
                 <div className={styles.botoes}>
