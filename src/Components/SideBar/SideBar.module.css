@@ -84,3 +84,22 @@
     border-radius: 50%;
     object-fit: cover;
 }
+
+.logout {
+    width: 100%;
+    padding: 1vh;
+    background-color: transparent;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    border-radius: 1vh;
+    color: white;
+    font-size: 2vh;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s, border-color 0.3s;
+    margin-bottom: 1vh;
+}
+
+.logout:hover {
+    background-color: rgba(255, 100, 100, 0.25);
+    border-color: rgba(255, 100, 100, 0.6);
+}

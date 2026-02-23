@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Sidebar from "../../Components/SideBar/SideBar";
+import Cookies from "js-cookie";
 import DisciplinaItemCard from "./components/DisciplinaItemCard";
 import styles from "./Disciplinas.module.css";
 
@@ -15,6 +16,9 @@ const CORES = [
 ];
 
 function Disciplinas() {
+    const cookieData = Cookies.get('usuario')
+    const usuario = cookieData ? JSON.parse(cookieData) : { nome: '', foto: null }
+
     const [disciplinas] = useState([
         { id: 1, nome: "Matemática" },
         { id: 2, nome: "Português" },
@@ -28,7 +32,7 @@ function Disciplinas() {
 
     return (
         <div className={styles.container}>
-            <Sidebar nome="Leonardo Lins" tipo="aluno" />
+            <Sidebar nome={usuario.nome} foto={usuario.foto} tipo="aluno" />
 
             <main className={styles.content}>
                 <h3 className={styles.titulo}>Disciplinas</h3>

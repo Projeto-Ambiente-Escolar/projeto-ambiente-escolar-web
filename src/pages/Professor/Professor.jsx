@@ -2,7 +2,7 @@ import "./Professor.css"
 import SideBar from "../../Components/SideBar/SideBar"
 import Notas from "../Notas/Notas";
 import { useState, useEffect } from "react";
-import Foto from "../../../public/assets/foto_perfil_1.svg"
+import Cookies from "js-cookie";
 import CardNota from "../../Components/CardNota/CardNota";
 import Turmas from "../Turma/Turmas";
 import Recados from "../Recados/Recados";
@@ -12,7 +12,8 @@ import { useLocation, Navigate } from "react-router-dom";
 
 function Professor() {
 
-    const professor = {nome:"Paulo Vaz", foto:Foto}
+    const cookieData = Cookies.get('usuario')
+    const professor = cookieData ? JSON.parse(cookieData) : { nome: '', foto: null }
 
     const location = useLocation()
 

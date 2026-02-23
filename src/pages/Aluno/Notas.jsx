@@ -1,9 +1,12 @@
 import Sidebar from "../../Components/SideBar/SideBar";
-import Foto from "../../../public/assets/foto_perfil.svg";
+import Cookies from "js-cookie";
 import styles from "./Notas.module.css";
 import html2pdf from "html2pdf.js";
 
 function TabelaNotas() {
+    const cookieData = Cookies.get('usuario')
+    const usuario = cookieData ? JSON.parse(cookieData) : { nome: '', foto: null }
+
     const notas = [
         { disciplina: "Matemática", n1: 8.5, n2: 9.0 },
         { disciplina: "Português", n1: 7.0, n2: 8.0 },
@@ -27,7 +30,7 @@ function TabelaNotas() {
 
     return (
         <div style={{ display: "flex", minHeight: "100vh", backgroundColor: "#f5f6fa" }}>
-            <Sidebar nome="Leonardo Lins" tipo="aluno" />
+            <Sidebar nome={usuario.nome} foto={usuario.foto} tipo="aluno" />
 
             <main style={{ flex: 1, padding: "2.5rem 3rem" }}>
                 <div id="boletim-pdf">
