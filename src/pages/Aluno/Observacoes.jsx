@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../../Components/SideBar/SideBar";
+import Cookies from "js-cookie";
 import DisciplinaCard from "./components/DisciplinaCard";
 import ObservacaoModal from "./components/ObservacaoModal";
 import styles from "./Observacoes.module.css";
 
 function Observacoes() {
+    const cookieData = Cookies.get('usuario')
+    const usuario = cookieData ? JSON.parse(cookieData) : { nome: '', foto: null }
+
     const [disciplinas, setDisciplinas] = useState([
         { id: 1, nome: "Matemática", observacao: "O aluno demonstra dificuldades com frações e equações de segundo grau. Recomenda-se reforço." },
         { id: 2, nome: "Português", observacao: "Boa participação nas aulas. Precisa melhorar a produção textual e a coesão das redações." },
@@ -23,7 +27,7 @@ function Observacoes() {
 
     return (
         <div className={styles.container}>
-            <Sidebar nome="Leonardo Lins" tipo="aluno" />
+            <Sidebar nome={usuario.nome} foto={usuario.foto} tipo="aluno" />
 
             <main className={styles.content}>
                 <h3 className={styles.titulo}>Observações</h3>

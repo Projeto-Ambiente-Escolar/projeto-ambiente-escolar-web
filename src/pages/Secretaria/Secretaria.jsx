@@ -6,6 +6,7 @@ import SearchBar from "./components/SearchBar";
 import SelectActions from "./components/SelectActions";
 import SolicitacaoCard from "./components/SolicitacaoCard";
 import ModalDetalhes from "./components/ModalDetalhes";
+import ModalCadastroAluno from "./components/ModalCadastroAluno";
 
 function Secretaria() {
 
@@ -59,6 +60,8 @@ function Secretaria() {
         setModalAberto(false);
         setAlunoSelecionado(null);
     };
+
+    const [modalCadastroAberto, setModalCadastroAberto] = useState(false);
     
 
     return (
@@ -68,11 +71,19 @@ function Secretaria() {
                 <img src={Foto} className={styles.fotoPerfil} />
             </div>
 
-            <SearchBar
-                inputBusca={inputBusca}
-                setInputBusca={setInputBusca}
-                onBuscar={handleBuscar}
-            />
+            <div className={styles.topoAcoes}>
+                <SearchBar
+                    inputBusca={inputBusca}
+                    setInputBusca={setInputBusca}
+                    onBuscar={handleBuscar}
+                />
+                <button
+                    className={styles.btnCadastrarAluno}
+                    onClick={() => setModalCadastroAberto(true)}
+                >
+                    + Cadastrar Aluno
+                </button>
+            </div>
 
             <SelectActions
                 selecionarTodos={selecionarTodos}
@@ -97,10 +108,16 @@ function Secretaria() {
                 ))}
             </div>
             {modalAberto && (
-            <ModalDetalhes
-                aluno={alunoSelecionado}
-                onClose={fecharModal}
-            />
+                <ModalDetalhes
+                    aluno={alunoSelecionado}
+                    onClose={fecharModal}
+                />
+            )}
+
+            {modalCadastroAberto && (
+                <ModalCadastroAluno
+                    onClose={() => setModalCadastroAberto(false)}
+                />
             )}
         </div>
     );

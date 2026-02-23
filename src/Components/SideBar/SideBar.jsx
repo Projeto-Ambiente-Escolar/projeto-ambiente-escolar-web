@@ -1,4 +1,5 @@
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import Cookies from "js-cookie"
 import styles from "./SideBar.module.css"
 import { menuConfig } from "./menuConfig"
 import Logo from "../../../public/assets/logo_side.svg"
@@ -7,6 +8,12 @@ import FotoPadrao from "../../../public/assets/foto_perfil.svg"
 function SideBar({ tipo, nome, foto }) {
     const menu = menuConfig[tipo] || []
     const location = useLocation()
+    const navigate = useNavigate()
+
+    const handleLogout = () => {
+        Cookies.remove('usuario')
+        navigate('/')
+    }
 
     return (
         <div className={styles.barContent}>
@@ -34,6 +41,10 @@ function SideBar({ tipo, nome, foto }) {
                 <img src={foto || FotoPadrao} className={styles.fotoPerfil} />
                 <p>{nome}</p>
             </div>
+
+            <button className={styles.logout} onClick={handleLogout}>
+                Sair
+            </button>
         </div>
     )
 }
