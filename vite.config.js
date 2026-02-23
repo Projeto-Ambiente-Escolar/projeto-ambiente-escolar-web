@@ -11,6 +11,10 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
+      '/notas': {
+        target: 'https://api-ambiente-escolar-sql-1.onrender.com',
+        changeOrigin: true,
+      },
     },
   },
 })

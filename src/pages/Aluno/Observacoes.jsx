@@ -4,26 +4,38 @@ import Cookies from "js-cookie";
 import DisciplinaCard from "./components/DisciplinaCard";
 import ObservacaoModal from "./components/ObservacaoModal";
 import styles from "./Observacoes.module.css";
+import { buscarTabelaNotas } from "../../services/alunoService";
 
 function Observacoes() {
     const cookieData = Cookies.get('usuario')
-    const usuario = cookieData ? JSON.parse(cookieData) : { nome: '', foto: null }
+    const usuario = cookieData ? JSON.parse(cookieData) : { nome: '', foto: null, id: null }
 
-    const [disciplinas, setDisciplinas] = useState([
-        { id: 1, nome: "Matemática", observacao: "O aluno demonstra dificuldades com frações e equações de segundo grau. Recomenda-se reforço." },
-        { id: 2, nome: "Português", observacao: "Boa participação nas aulas. Precisa melhorar a produção textual e a coesão das redações." },
-        { id: 3, nome: "História", observacao: "Excelente desempenho nas atividades. Demonstra interesse pelo conteúdo e participa ativamente." },
-        { id: 4, nome: "Geografia", observacao: "Apresenta dificuldades em cartografia. Sugere-se exercícios extras sobre coordenadas geográficas." },
-    ]);
-
+    const [disciplinas, setDisciplinas] = useState([]);
+    const [carregando, setCarregando] = useState(true);
+    const [erro, setErro] = useState(null);
     const [modalAberto, setModalAberto] = useState(null);
 
     useEffect(() => {
-        // TODO: substituir pela URL real da API
-        // fetch("https://api.exemplo.com/disciplinas")
-        //     .then(res => res.json())
-        //     .then(data => setDisciplinas(data));
-    }, []);
+        if (!usuario.id) {
+            setErro("Usuário não identificado.");
+            setCarregando(false);
+            return;
+        }
+
+        buscarTabelaNotas(usuario.id)
+            .then((data) => {
+                const comObservacao = data
+                    .filter(item => item.observacao && item.observacao.trim() !== "")
+                    .map(item => ({ nome: item.disciplina, observacao: item.observacao }));
+                setDisciplinas(comObservacao);
+            })
+            .catch(() => {
+                setErro("Erro ao carregar as observações. Tente novamente.");
+            })
+            .finally(() => {
+                setCarregando(false);
+            });
+    }, [usuario.id]);
 
     return (
         <div className={styles.container}>
@@ -32,10 +44,16 @@ function Observacoes() {
             <main className={styles.content}>
                 <h3 className={styles.titulo}>Observações</h3>
 
+                {carregando && <p style={{ textAlign: "center" }}>Carregando observações...</p>}
+                {erro && <p style={{ textAlign: "center", color: "#b71c1c" }}>{erro}</p>}
+                {!carregando && !erro && disciplinas.length === 0 && (
+                    <p style={{ textAlign: "center", color: "#666" }}>Nenhuma observação disponível.</p>
+                )}
+
                 <div className={styles.grid}>
-                    {disciplinas.map(d => (
+                    {disciplinas.map((d, index) => (
                         <DisciplinaCard
-                            key={d.id}
+                            key={index}
                             nome={d.nome}
                             onClick={() => setModalAberto(d)}
                         />
