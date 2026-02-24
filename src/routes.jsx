@@ -14,7 +14,6 @@ function AppRoutes() {
             <Routes>
                 <Route path="/" element={<Auth></Auth>}></Route>
                 <Route path="/professor" element={<Professor></Professor>}></Route>
-                <Route path="/turmas" element={<Professor></Professor>}></Route>
                 <Route path="/lancar-notas" element={<Professor></Professor>}></Route>
                 <Route path="/recados" element={<Professor></Professor>}></Route>
                 <Route path="/desempenho" element={<Professor></Professor>}></Route>

@@ -55,12 +55,6 @@ function Professor() {
         <div className="professor-body">
             <SideBar tipo="professor" nome={professor.nome} foto={professor.foto} />
             <div id="conteudo-professor">
-                {aba === "/turmas" && (
-                    !selecionar
-                        ? <Turmas definir={escolher}/>
-                        : <Notas idturma={turma} visualizar={abrir}/>
-                )}
-
                 {aba === "/lancar-notas" && (
                     !selecionar
                         ? <Turmas definir={escolher}/>
