@@ -56,7 +56,7 @@ function Auth() {
 
         const data = JSON.parse(text)
         Cookies.set('usuario', JSON.stringify({ ...data, tipo: 'professor' }), { expires: 1 })
-        navigate('/turmas')
+        navigate('/desempenho')
       }
     } catch (err) {
       setErro(err.message || 'Erro ao fazer login.')
