@@ -43,9 +43,10 @@
 #login-content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    gap: 6vh;
+    gap: 3vh;
+    padding-top: 4vh;
 }
 
 #login-content-2 h1,
@@ -58,6 +59,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 0.5vh;
 }
 
 #login-title-2 {
@@ -95,6 +97,13 @@
     border: none;
     filter: drop-shadow(0 0 0.3vh rgb(53, 53, 53));
     outline: none;
+    transition: filter 0.2s, box-shadow 0.2s;
+}
+
+.input-erro {
+    filter: drop-shadow(0 0 0.3vh rgba(255, 100, 100, 0.8)) !important;
+    background-color: rgba(247, 237, 237, 0.8);
+    box-shadow: 0 0 0 1.5px rgba(255, 100, 100, 0.6);
 }
 
 #login-informations-2,
@@ -188,22 +197,53 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     gap: 4vh;
-
     height: 40vh;
     width: 50vh;
-
     padding: 10vh;
-
     position: absolute;
     z-index: 9999;
-
     border-radius: 4vh;
     background-color: white;
     filter: drop-shadow(0 0 8px rgb(53, 53, 53));
-
     p, h2 {
         text-align: center;
     }
+}
+
+#foto-upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#foto-placeholder {
+    width: 10vh;
+    height: 10vh;
+    border-radius: 50%;
+    background-color: var(--azul-claro);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3vh;
+    filter: drop-shadow(0 0 0.3vh rgb(53, 53, 53));
+    transition: opacity 0.2s;
+}
+
+#foto-placeholder:hover {
+    opacity: 0.8;
+}
+
+#foto-preview {
+    width: 10vh;
+    height: 10vh;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: drop-shadow(0 0 0.3vh rgb(53, 53, 53));
+    transition: opacity 0.2s;
+}
+
+#foto-preview:hover {
+    opacity: 0.8;
 }

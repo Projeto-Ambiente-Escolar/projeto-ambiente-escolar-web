@@ -5,7 +5,7 @@ function PrivateRoute({ children, allowedRoles }) {
   const usuarioCookie = Cookies.get("usuario");
 
   if (!usuarioCookie) {
-    return <Navigate to="/acesso-negado" replace />;
+    return <Navigate to="/" replace />;
   }
 
   const usuario = JSON.parse(usuarioCookie);
