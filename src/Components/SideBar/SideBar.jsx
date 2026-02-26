@@ -10,6 +10,12 @@ function SideBar({ tipo, nome, foto }) {
     const location = useLocation()
     const navigate = useNavigate()
 
+    const fotoSrc = foto
+        ? foto.startsWith('data:') || foto.startsWith('http') || foto.startsWith('/')
+            ? foto
+            : `data:image/jpeg;base64,${foto}`
+        : FotoPadrao
+
     const handleLogout = () => {
         Cookies.remove('usuario')
         navigate('/')
@@ -38,7 +44,7 @@ function SideBar({ tipo, nome, foto }) {
             </nav>
 
             <div className={styles.perfil}>
-                <img src={foto || FotoPadrao} className={styles.fotoPerfil} />
+                <img src={fotoSrc} className={styles.fotoPerfil} />
                 <p>{nome}</p>
             </div>
 
