@@ -90,7 +90,7 @@ function Circulo({ value, max = 10 }) {
   );
 }
 
-export default function Desempenho() {
+export default function Desempenho({abrir}) {
   const [mostrarDropdown, setMostrarDropdown] = useState(false);
   const [filtroAno, setFiltroAno] = useState(1);
 
@@ -130,7 +130,7 @@ export default function Desempenho() {
           <p className="card-subtitle">Necessitam acompanhamento — média menor que 7</p>
           <div className={`atencao-list ${alunosAtencao.length > 5 ? "scrollavel" : ""}`}>
             {alunosAtencao.map((a) => (
-              <div className="aluno-item" key={a.nome}>
+              <div className="aluno-item" key={a.nome} onClick={() => abrir(a)} style={{ cursor: "pointer" }}>
                 <AvatarIcon size={56} color="#90a4ae" />
                 <span className="aluno-nome">{a.nome}</span>
                 <span className="aluno-media atencao">{a.media}</span>
@@ -149,7 +149,7 @@ export default function Desempenho() {
             {[...alunosDestaque]
               .sort((a, b) => ordemPodio.indexOf(a.posicao) - ordemPodio.indexOf(b.posicao))
               .map((a) => (
-                <div className={`podio-col pos-${a.posicao}`} key={a.nome}>
+                <div className={`podio-col pos-${a.posicao}`} key={a.nome} onClick={() => abrir(a)} style={{ cursor: "pointer" }}>
                   <AvatarIcon size={48} color="#78909c" />
                   <span className="podio-nome">{a.nome}</span>
                   <span className="podio-nota">{a.nota}</span>
