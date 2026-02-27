@@ -35,7 +35,7 @@ function Professor() {
         setTurma(0)
     }, [aba])
 
-    if (aba === "/professor") return <Navigate to="/turmas" replace />
+    if (aba === "/professor") return <Navigate to="/desempenho" replace />
 
     const abrir = () => {
         setMostrarCardNota(true)
