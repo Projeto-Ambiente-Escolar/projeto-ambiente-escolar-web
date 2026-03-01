@@ -14,7 +14,7 @@ import Desempenho from "../Desempenho/Desempenho";
 function Professor() {
 
     const cookieData = Cookies.get('usuario')
-    const professor = cookieData ? JSON.parse(cookieData) : { nome: '', foto: null }
+    const professor = cookieData ? JSON.parse(cookieData) : { id: 0, nome: '', foto: null }
 
     const location = useLocation()
 
@@ -38,6 +38,7 @@ function Professor() {
     if (aba === "/professor") return <Navigate to="/desempenho" replace />
 
     const abrir = () => {
+        console.log("knwo")
         setMostrarCardNota(true)
     }
 
@@ -69,7 +70,7 @@ function Professor() {
 
             {mostrarCardNota && <CardNota fechar={() => setMostrarCardNota(false)} />}
 
-            {mostrarCardRecado && <CardRecado id={aluno} fechar={() => setMostrarCardRecado(false)} />}
+            {mostrarCardRecado && <CardRecado id={aluno.id} idprofessor={professor.id} nome={professor.nome} fechar={() => setMostrarCardRecado(false)} atualizar={() => {window.dispatchEvent(new Event("atualizarRecados"))}}/>}
         </div>
     )
 }
