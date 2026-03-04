@@ -11,7 +11,6 @@ function Auth() {
   const [isCadastro, setIsCadastro] = useState(true)
 
   const [nome, setNome] = useState('')
-  const [matricula, setMatricula] = useState('')
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
   const [fotoBase64, setFotoBase64] = useState('')
@@ -50,7 +49,6 @@ function Auth() {
       const ctx = canvas.getContext('2d')
       ctx.drawImage(img, 0, 0, width, height)
 
-      // JPEG 80% — mesmo padrão do mobile (Bitmap.CompressFormat.JPEG, 80)
       const dataUrl = canvas.toDataURL('image/jpeg', 0.8)
       setFotoBase64(dataUrl.split(',')[1])
       setFotoPreview(dataUrl)
@@ -105,7 +103,6 @@ function Auth() {
   const handleCadastro = async () => {
     const vazios = []
     if (!nome) vazios.push('nome')
-    if (!matricula) vazios.push('matricula')
     if (!email) vazios.push('email')
     if (!senha) vazios.push('senha')
 
@@ -118,9 +115,8 @@ function Auth() {
     setCarregando(true)
 
     try {
-      await cadastrarAluno({ nome, matricula, email, senha, foto: fotoBase64 })
+      await cadastrarAluno({ nome, email, senha, foto: fotoBase64 })
       setNome('')
-      setMatricula('')
       setEmail('')
       setSenha('')
       setFotoBase64('')
@@ -128,7 +124,7 @@ function Auth() {
       setCadastroSucesso(true)
       setIsCadastro(true)
     } catch (err) {
-      setErroCadastro(['nome', 'matricula', 'email', 'senha'])
+      setErroCadastro(['nome', 'email', 'senha'])
     } finally {
       setCarregando(false)
     }
@@ -202,7 +198,6 @@ function Auth() {
               />
             </div>
             <input className={`input-1 ${erroCadastro.includes('nome') ? 'input-erro' : ''}`} placeholder="Nome Completo" value={nome} onChange={(e) => { setNome(e.target.value); setErroCadastro(p => p.filter(c => c !== 'nome')) }} />
-            <input className={`input-1 ${erroCadastro.includes('matricula') ? 'input-erro' : ''}`} placeholder="Matrícula" value={matricula} onChange={(e) => { setMatricula(e.target.value); setErroCadastro(p => p.filter(c => c !== 'matricula')) }} />
             <input className={`input-1 ${erroCadastro.includes('email') ? 'input-erro' : ''}`} placeholder="E-mail" value={email} onChange={(e) => { setEmail(e.target.value); setErroCadastro(p => p.filter(c => c !== 'email')) }} />
             <input className={`input-1 ${erroCadastro.includes('senha') ? 'input-erro' : ''}`} type="password" placeholder="Senha" value={senha} onChange={(e) => { setSenha(e.target.value); setErroCadastro(p => p.filter(c => c !== 'senha')) }} />
           </div>
