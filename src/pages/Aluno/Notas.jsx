@@ -37,7 +37,7 @@ function TabelaNotas() {
 
         const opcoes = {
             margin: 10,
-            filename: "boletim.pdf",
+            filename: (usuario.nome).replace(/\s/g, "") +"-Boletim-2025.pdf",
             image: { type: "jpeg", quality: 0.98 },
             html2canvas: { scale: 2 },
             jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }

@@ -1,11 +1,9 @@
-const BASE_URL = "https://api-ambiente-escolar-sql-1.onrender.com";
-
 export async function buscarTabelaNotas(idAluno) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-        const response = await fetch(`/notas/tabelaNotas/${idAluno}`, {
+        const response = await fetch(`/api/notas/tabelaNotas/${idAluno}`, {
             method: "GET",
             headers: {
                 "accept": "*/*",
@@ -36,13 +34,15 @@ export async function cadastrarAluno(dados) {
     const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
 
     try {
-        const response = await fetch(`${BASE_URL}/aluno/cadastrarAluno`, {
+        const turma = Math.floor(Math.random() * 10) + 1
+
+        const response = await fetch(`/api/aluno/cadastrarAluno`, {
             method: "POST",
             headers: {
                 "accept": "*/*",
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(dados),
+            body: JSON.stringify({ ...dados, status: "0", turma }),
             signal: controller.signal,
         });
 

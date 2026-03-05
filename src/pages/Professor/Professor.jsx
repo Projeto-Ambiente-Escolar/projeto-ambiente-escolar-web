@@ -7,6 +7,7 @@ import CardNota from "../../Components/CardNota/CardNota";
 import Turmas from "../Turma/Turmas";
 import Recados from "../Recados/Recados";
 import CardRecado from "../../Components/CardRecado/CardRecado";
+import CardDesempenho from "../../Components/CardDesempenho/CardDesempenho";
 import { useLocation, Navigate } from "react-router-dom";
 import Desempenho from "../Desempenho/Desempenho";
 
@@ -19,14 +20,12 @@ function Professor() {
     const location = useLocation()
 
     const [selecionar, setSelecionar] = useState(false)
-
     const [turma, setTurma] = useState(0)
-
     const [mostrarCardNota, setMostrarCardNota] = useState(false)
-
     const [mostrarCardRecado, setMostrarCardRecado] = useState(false)
-
+    const [mostrarCardAluno, setMostrarCardAluno] = useState(false)
     const [aluno, setAluno] = useState()
+    const [alunoDesempenho, setAlunoDesempenho] = useState(null)
 
     const [att, setAtt] = useState(false)
 
@@ -44,7 +43,7 @@ function Professor() {
         setMostrarCardNota(true)
     }
 
-    const escolher = (id) =>{
+    const escolher = (id) => {
         setSelecionar(true)
         setTurma(id)
     }
@@ -56,6 +55,14 @@ function Professor() {
 
     const atualizarAlunos = (d) =>{
         setAtt(d)
+    const abrirRecado = (id) => {
+        setAluno(id)
+        setMostrarCardRecado(true)
+    }
+
+    const abrirDesempenho = (aluno) => {
+        setAlunoDesempenho(aluno)
+        setMostrarCardAluno(true)
     }
 
     return (
@@ -68,10 +75,9 @@ function Professor() {
                         : <Notas idturma={turma} visualizar={abrir} atualizar={att} at={atualizarAlunos}/>
                 )}
 
-                {aba === "/desempenho" && <Desempenho abrir={Desempenho}/>}
+                {aba === "/desempenho" && <Desempenho abrir={abrirDesempenho}/>}
 
                 {aba === "/recados" && <Recados abrir={abrirRecado}/>}
-                
             </div>
 
             {mostrarCardNota && <CardNota atualizar={att} at={atualizarAlunos} aluno={aluno} fechar={() => setMostrarCardNota(false)} />}
@@ -80,6 +86,5 @@ function Professor() {
         </div>
     )
 }
-
 
 export default Professor
