@@ -18,19 +18,14 @@ export const menuConfig = {
     ],
     professor: [
         {
-            label: "Minhas Turmas",
-            rota: "/turmas",
-            icon: "/assets/lancar_icon.svg"
-        },
-        {
             label: "Desempenho",
             rota: "/desempenho",
-            icon: "/assets/recado_icon.svg"
+            icon: "/assets/desempenho_icon.svg"
         },
         {
             label: "Lançar Notas",
             rota: "/lancar-notas",
-            icon: "/assets/recado_icon.svg"
+            icon: "/assets/lancar_icon.svg"
         },
         {
             label: "Recados",
