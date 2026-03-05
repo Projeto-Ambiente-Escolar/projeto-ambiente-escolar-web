@@ -4,6 +4,8 @@ import Cookies from 'js-cookie'
 import './Auth.css'
 import Logo from '../../../public/assets/Logooo.svg'
 import { cadastrarAluno } from '../../services/alunoService'
+import { uploadFotoCloudinary } from '../../services/cloudinaryService'
+import Toast from '../../Components/Toast/Toast'
 
 function Auth() {
   const navigate = useNavigate()
@@ -22,8 +24,11 @@ function Auth() {
   const [erroCadastro, setErroCadastro] = useState([])
   const [carregando, setCarregando] = useState(false)
   const [cadastroSucesso, setCadastroSucesso] = useState(false)
+  const [toast, setToast] = useState(null) 
 
-  const isAluno = (email) => email.endsWith('@email.com')
+  const mostrarToast = (mensagem, tipo) => setToast({ mensagem, tipo })
+
+  const isAluno = (credencial) => credencial.includes('@')
 
   const handleFotoChange = (e) => {
     const file = e.target.files[0]
@@ -77,8 +82,11 @@ function Auth() {
         if (!response.ok || !text) throw new Error()
 
         const data = JSON.parse(text)
-        Cookies.set('usuario', JSON.stringify({ ...data, tipo: 'aluno' }), { expires: 1 })
-        navigate('/notas')
+        const { foto, ...dadosSemFoto } = data
+        if (foto) localStorage.setItem('usuario_foto', foto)
+        Cookies.set('usuario', JSON.stringify({ ...dadosSemFoto, tipo: 'aluno' }), { expires: 1 })
+        mostrarToast('Login feito com sucesso', 'sucesso')
+        setTimeout(() => navigate('/notas'), 1000)
       } else {
         const response = await fetch('/api/professor/login', {
           method: 'POST',
@@ -90,11 +98,15 @@ function Auth() {
         if (!response.ok || !text) throw new Error()
 
         const data = JSON.parse(text)
-        Cookies.set('usuario', JSON.stringify({ ...data, tipo: 'professor' }), { expires: 1 })
-        navigate('/turmas')
+        const { foto, ...dadosSemFoto } = data
+        if (foto) localStorage.setItem('usuario_foto', foto)
+        Cookies.set('usuario', JSON.stringify({ ...dadosSemFoto, tipo: 'professor' }), { expires: 1 })
+        mostrarToast('Login feito com sucesso', 'sucesso')
+        setTimeout(() => navigate('/turmas'), 1000)
       }
     } catch (err) {
       setErroLogin(true)
+      mostrarToast('Não foi possível fazer o login', 'erro')
     } finally {
       setCarregando(false)
     }
@@ -115,7 +127,11 @@ function Auth() {
     setCarregando(true)
 
     try {
-      await cadastrarAluno({ nome, email, senha, foto: fotoBase64 })
+      // 1. Faz upload da foto para o Cloudinary e recebe a URL pública
+      const fotoUrl = await uploadFotoCloudinary(fotoBase64)
+
+      // 2. Cadastra o aluno enviando a URL da foto (curta) ao invés do Base64
+      await cadastrarAluno({ nome, email, senha, foto: fotoUrl })
       setNome('')
       setEmail('')
       setSenha('')
@@ -123,6 +139,7 @@ function Auth() {
       setFotoPreview(null)
       setCadastroSucesso(true)
       setIsCadastro(true)
+      mostrarToast('Cadastro feito com sucesso', 'sucesso')
     } catch (err) {
       setErroCadastro(['nome', 'email', 'senha'])
     } finally {
@@ -132,6 +149,14 @@ function Auth() {
 
   return (
     <div className={`login-body ${isCadastro ? 'ativo' : ''}`}>
+
+      {toast && (
+        <Toast
+          mensagem={toast.mensagem}
+          tipo={toast.tipo}
+          onClose={() => setToast(null)}
+        />
+      )}
 
         <div className={`card-informacao ${cadastroSucesso ? 'ativo' : ''}`}>
             <h2>Cadastrado com Sucesso</h2>
