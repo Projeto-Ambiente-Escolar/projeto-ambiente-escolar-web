@@ -35,6 +35,8 @@
 
     img {
         width: 25vh;
+        min-height: 25vh;
+        border-radius: 50%;
     }
 }
 
@@ -60,12 +62,6 @@
 
     font-size: 2vh;
 }
-
-.inativo {
-    cursor: auto;
-    background-color: #2fbce779;
-}
-
 
 #nota {
     p {
@@ -108,7 +104,7 @@
     font-size: 3vh;
 }
 
-#calcular {
+.calcular {
     cursor: pointer;
     background-color: var(--azul-escuro);
     color: white;
@@ -144,4 +140,18 @@
 
     color: black;
     resize: none;
+}
+
+#status {
+    background-color: white;
+    border-radius: 3vh;
+    padding: 1.5vh;
+    width: 23vh;
+    color: var(--azul-escuro);
+    border: 0.3vh solid var(--azul-escuro);
+}
+
+.inativo {
+    cursor: auto;
+    background-color: #2fbce779;
 }
