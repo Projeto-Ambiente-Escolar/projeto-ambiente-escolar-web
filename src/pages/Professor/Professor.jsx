@@ -48,16 +48,13 @@ function Professor() {
         setTurma(id)
     }
 
-    const abrirRecado = (a) =>{
+    const abrirRecado = (a) => {
         setAluno(a)
         setMostrarCardRecado(true)
     }
 
-    const atualizarAlunos = (d) =>{
+    const atualizarAlunos = (d) => {
         setAtt(d)
-    const abrirRecado = (id) => {
-        setAluno(id)
-        setMostrarCardRecado(true)
     }
 
     const abrirDesempenho = (aluno) => {
