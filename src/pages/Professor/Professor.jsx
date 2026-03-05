@@ -28,6 +28,8 @@ function Professor() {
 
     const [aluno, setAluno] = useState()
 
+    const [att, setAtt] = useState(false)
+
     const aba = location.pathname
 
     useEffect(() => {
@@ -37,8 +39,8 @@ function Professor() {
 
     if (aba === "/professor") return <Navigate to="/desempenho" replace />
 
-    const abrir = () => {
-        console.log("knwo")
+    const abrir = (a) => {
+        setAluno(a)
         setMostrarCardNota(true)
     }
 
@@ -47,9 +49,13 @@ function Professor() {
         setTurma(id)
     }
 
-    const abrirRecado = (id) =>{
-        setAluno(id)
+    const abrirRecado = (a) =>{
+        setAluno(a)
         setMostrarCardRecado(true)
+    }
+
+    const atualizarAlunos = (d) =>{
+        setAtt(d)
     }
 
     return (
@@ -59,7 +65,7 @@ function Professor() {
                 {aba === "/lancar-notas" && (
                     !selecionar
                         ? <Turmas definir={escolher}/>
-                        : <Notas idturma={turma} visualizar={abrir}/>
+                        : <Notas idturma={turma} visualizar={abrir} atualizar={att} at={atualizarAlunos}/>
                 )}
 
                 {aba === "/desempenho" && <Desempenho abrir={Desempenho}/>}
@@ -68,7 +74,7 @@ function Professor() {
                 
             </div>
 
-            {mostrarCardNota && <CardNota fechar={() => setMostrarCardNota(false)} />}
+            {mostrarCardNota && <CardNota atualizar={att} at={atualizarAlunos} aluno={aluno} fechar={() => setMostrarCardNota(false)} />}
 
             {mostrarCardRecado && <CardRecado id={aluno.id} idprofessor={professor.id} nome={professor.nome} fechar={() => setMostrarCardRecado(false)} atualizar={() => {window.dispatchEvent(new Event("atualizarRecados"))}}/>}
         </div>

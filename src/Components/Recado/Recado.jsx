@@ -1,7 +1,7 @@
 import style from "./Recado.module.css"
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import { buscarAluno } from "../../services/alunoService";
+import { buscarProfessor } from "../../services/professorService";
 
 function Recado({id, texto}) {
 
@@ -17,7 +17,7 @@ function Recado({id, texto}) {
             return;
         }
     
-        buscarAluno(id)
+        buscarProfessor(id)
             .then((data) => {
                 setProfessor(data);
             })

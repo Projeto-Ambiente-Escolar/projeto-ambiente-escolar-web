@@ -125,3 +125,34 @@ export async function buscarAluno(id) {
         throw err;
     }
 }
+
+export async function buscarAlunosComStatus(idprofessor, idserie) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+    try {
+        const response = await fetch(`${BASE_URL}/aluno/listarAlunosComStatusDaMateria/${idprofessor}/${idserie}`, {
+            method: "GET",
+            headers: {
+                "accept": "*/*",
+            },
+            signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw { status: response.status, ...data };
+        }
+
+        return data;
+    } catch (err) {
+        clearTimeout(timeoutId);
+        if (err.name === "AbortError") {
+            throw { status: 408, message: "Servidor demorou para responder. Tente novamente." };
+        }
+        throw err;
+    }
+}
