@@ -31,7 +31,7 @@ export async function buscarTabelaNotas(idAluno) {
 
 export async function cadastrarAluno(dados) {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+    const timeoutId = setTimeout(() => controller.abort(), 15000); 
 
     try {
         const turma = Math.floor(Math.random() * 10) + 1
@@ -42,7 +42,7 @@ export async function cadastrarAluno(dados) {
                 "accept": "*/*",
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ ...dados, status: "0", turma }),
+            body: JSON.stringify({ ...dados, status: "2", turma }),
             signal: controller.signal,
         });
 

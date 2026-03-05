@@ -5,19 +5,21 @@ import { menuConfig } from "./menuConfig"
 import Logo from "../../../public/assets/logo_side.svg"
 import FotoPadrao from "../../../public/assets/foto_perfil.svg"
 
-function SideBar({ tipo, nome, foto }) {
+function SideBar({ tipo, nome }) {
     const menu = menuConfig[tipo] || []
     const location = useLocation()
     const navigate = useNavigate()
 
-    const fotoSrc = foto
-        ? foto.startsWith('data:') || foto.startsWith('http') || foto.startsWith('/')
-            ? foto
-            : `data:image/jpeg;base64,${foto}`
+    const fotoRaw = localStorage.getItem('usuario_foto')
+    const fotoSrc = fotoRaw
+        ? fotoRaw.startsWith('data:') || fotoRaw.startsWith('http') || fotoRaw.startsWith('/')
+            ? fotoRaw
+            : `data:image/jpeg;base64,${fotoRaw}`
         : FotoPadrao
 
     const handleLogout = () => {
         Cookies.remove('usuario')
+        localStorage.removeItem('usuario_foto')
         navigate('/')
     }
 
