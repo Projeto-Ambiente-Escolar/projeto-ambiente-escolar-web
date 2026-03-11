@@ -4,6 +4,8 @@ import Cookies from 'js-cookie'
 import './Auth.css'
 import Logo from '../../../public/assets/Logooo.svg'
 import { cadastrarAluno } from '../../services/alunoService'
+import { uploadFotoCloudinary } from '../../services/cloudinaryService'
+import Toast from '../../Components/Toast/Toast'
 
 function Auth() {
   const navigate = useNavigate()
@@ -11,7 +13,6 @@ function Auth() {
   const [isCadastro, setIsCadastro] = useState(true)
 
   const [nome, setNome] = useState('')
-  const [matricula, setMatricula] = useState('')
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
   const [fotoBase64, setFotoBase64] = useState('')
@@ -23,8 +24,11 @@ function Auth() {
   const [erroCadastro, setErroCadastro] = useState([])
   const [carregando, setCarregando] = useState(false)
   const [cadastroSucesso, setCadastroSucesso] = useState(false)
+  const [toast, setToast] = useState(null) 
 
-  const isAluno = (email) => email.endsWith('@email.com')
+  const mostrarToast = (mensagem, tipo) => setToast({ mensagem, tipo })
+
+  const isAluno = (credencial) => credencial.includes('@')
 
   const handleFotoChange = (e) => {
     const file = e.target.files[0]
@@ -50,7 +54,6 @@ function Auth() {
       const ctx = canvas.getContext('2d')
       ctx.drawImage(img, 0, 0, width, height)
 
-      // JPEG 80% — mesmo padrão do mobile (Bitmap.CompressFormat.JPEG, 80)
       const dataUrl = canvas.toDataURL('image/jpeg', 0.8)
       setFotoBase64(dataUrl.split(',')[1])
       setFotoPreview(dataUrl)
@@ -88,8 +91,11 @@ function Auth() {
         if (!response.ok || !text) throw new Error()
   
         const data = JSON.parse(text)
-        Cookies.set('usuario', JSON.stringify({ ...data, tipo: 'aluno' }), { expires: 1 })
-        navigate('/notas')
+        const { foto, ...dadosSemFoto } = data
+        if (foto) localStorage.setItem('usuario_foto', foto)
+        Cookies.set('usuario', JSON.stringify({ ...dadosSemFoto, tipo: 'aluno' }), { expires: 1 })
+        mostrarToast('Login feito com sucesso', 'sucesso')
+        setTimeout(() => navigate('/notas'), 1000)
         return
       }
   
@@ -104,11 +110,15 @@ function Auth() {
       if (!response.ok || !text) throw new Error()
   
       const data = JSON.parse(text)
-      Cookies.set('usuario', JSON.stringify({ ...data, tipo: 'professor' }), { expires: 1 })
-      navigate('/turmas')
+        const { foto, ...dadosSemFoto } = data
+        if (foto) localStorage.setItem('usuario_foto', foto)
+      Cookies.set('usuario', JSON.stringify({ ...dadosSemFoto, tipo: 'professor' }), { expires: 1 })
+      mostrarToast('Login feito com sucesso', 'sucesso')
+        setTimeout(() => navigate('/turmas'), 1000)
   
     } catch (err) {
       setErroLogin(true)
+      mostrarToast('Não foi possível fazer o login', 'erro')
     } finally {
       setCarregando(false)
     }
@@ -117,7 +127,6 @@ function Auth() {
   const handleCadastro = async () => {
     const vazios = []
     if (!nome) vazios.push('nome')
-    if (!matricula) vazios.push('matricula')
     if (!email) vazios.push('email')
     if (!senha) vazios.push('senha')
 
@@ -130,17 +139,21 @@ function Auth() {
     setCarregando(true)
 
     try {
-      await cadastrarAluno({ nome, matricula, email, senha, foto: fotoBase64 })
+      // 1. Faz upload da foto para o Cloudinary e recebe a URL pública
+      const fotoUrl = await uploadFotoCloudinary(fotoBase64)
+
+      // 2. Cadastra o aluno enviando a URL da foto (curta) ao invés do Base64
+      await cadastrarAluno({ nome, email, senha, foto: fotoUrl })
       setNome('')
-      setMatricula('')
       setEmail('')
       setSenha('')
       setFotoBase64('')
       setFotoPreview(null)
       setCadastroSucesso(true)
       setIsCadastro(true)
+      mostrarToast('Cadastro feito com sucesso', 'sucesso')
     } catch (err) {
-      setErroCadastro(['nome', 'matricula', 'email', 'senha'])
+      setErroCadastro(['nome', 'email', 'senha'])
     } finally {
       setCarregando(false)
     }
@@ -148,6 +161,14 @@ function Auth() {
 
   return (
     <div className={`login-body ${isCadastro ? 'ativo' : ''}`}>
+
+      {toast && (
+        <Toast
+          mensagem={toast.mensagem}
+          tipo={toast.tipo}
+          onClose={() => setToast(null)}
+        />
+      )}
 
         <div className={`card-informacao ${cadastroSucesso ? 'ativo' : ''}`}>
             <h2>Cadastrado com Sucesso</h2>
@@ -214,7 +235,6 @@ function Auth() {
               />
             </div>
             <input className={`input-1 ${erroCadastro.includes('nome') ? 'input-erro' : ''}`} placeholder="Nome Completo" value={nome} onChange={(e) => { setNome(e.target.value); setErroCadastro(p => p.filter(c => c !== 'nome')) }} />
-            <input className={`input-1 ${erroCadastro.includes('matricula') ? 'input-erro' : ''}`} placeholder="Matrícula" value={matricula} onChange={(e) => { setMatricula(e.target.value); setErroCadastro(p => p.filter(c => c !== 'matricula')) }} />
             <input className={`input-1 ${erroCadastro.includes('email') ? 'input-erro' : ''}`} placeholder="E-mail" value={email} onChange={(e) => { setEmail(e.target.value); setErroCadastro(p => p.filter(c => c !== 'email')) }} />
             <input className={`input-1 ${erroCadastro.includes('senha') ? 'input-erro' : ''}`} type="password" placeholder="Senha" value={senha} onChange={(e) => { setSenha(e.target.value); setErroCadastro(p => p.filter(c => c !== 'senha')) }} />
           </div>

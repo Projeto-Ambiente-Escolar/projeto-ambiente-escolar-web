@@ -9,8 +9,9 @@
     width: 30vh;
     height: 30vh;
     background-color: rgb(255, 255, 255);
-    filter: drop-shadow(0vh 0.8vh 0.7vh rgb(53, 53, 53));
     color: var(--cinza-escuro);
+    box-shadow: var(--shadow);
+
 
     font-size: 2.5vh;
 
@@ -28,7 +29,7 @@
 }
 
 .ativo {
-    background-color: #f1f1f1;
+    border: 0.3vh solid var(--azul-claro);
 }
 
 

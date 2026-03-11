@@ -50,7 +50,6 @@
     border-radius: 50%;
     object-fit: cover;
     border: #4692D1 solid 0.3vh;
-    filter: drop-shadow(0 0 0.3vh rgb(53, 53, 53));
     transition: opacity 0.2s;
 }
 

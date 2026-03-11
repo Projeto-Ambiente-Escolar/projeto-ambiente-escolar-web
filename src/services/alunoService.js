@@ -31,7 +31,7 @@ export async function buscarTabelaNotas(idAluno) {
 
 export async function cadastrarAluno(dados) {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+    const timeoutId = setTimeout(() => controller.abort(), 15000); 
 
     try {
         const turma = Math.floor(Math.random() * 10) + 1
@@ -102,6 +102,68 @@ export async function buscarAlunosPendentes() {
     }
 }
 
+export async function buscarAlunos() {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+    try {
+        const response = await fetch(`${BASE_URL}/aluno/selecionarTodos`, {
+            method: "GET",
+            headers: {
+                "accept": "*/*",
+            },
+            signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw { status: response.status, ...data };
+        }
+
+        return data;
+    } catch (err) {
+        clearTimeout(timeoutId);
+        if (err.name === "AbortError") {
+            throw { status: 408, message: "Servidor demorou para responder. Tente novamente." };
+        }
+        throw err;
+    }
+}
+
+export async function buscarAluno(id) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+    try {
+        const response = await fetch(`${BASE_URL}/aluno/${id}`, {
+            method: "GET",
+            headers: {
+                "accept": "*/*",
+            },
+            signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw { status: response.status, ...data };
+        }
+
+        return data;
+    } catch (err) {
+        clearTimeout(timeoutId);
+        if (err.name === "AbortError") {
+            throw { status: 408, message: "Servidor demorou para responder. Tente novamente." };
+        }
+        throw err;
+    }
+}
+
 export async function alterarStatus(id, status) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000);
@@ -144,24 +206,6 @@ export async function alterarStatus(id, status) {
     }
 }
 
-export async function buscarTurmas() {
-
-    const response = await fetch(`${API_BASE_URL}/turma/listar`, {
-        method: "GET",
-        headers: {
-            "accept": "*/*"
-        }
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-        throw data;
-    }
-
-    return data;
-}
-
 export async function vincularTurma(idAluno, idTurma) {
 
     const response = await fetch(`${API_BASE_URL}/aluno/vincularTurma/${idAluno}/${idTurma}`, {
@@ -177,4 +221,35 @@ export async function vincularTurma(idAluno, idTurma) {
     }
 
     return true;
+}
+
+export async function buscarAlunosComStatus(idprofessor, idserie) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+    try {
+        const response = await fetch(`${BASE_URL}/aluno/listarAlunosComStatusDaMateria/${idprofessor}/${idserie}`, {
+            method: "GET",
+            headers: {
+                "accept": "*/*",
+            },
+            signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw { status: response.status, ...data };
+        }
+
+        return data;
+    } catch (err) {
+        clearTimeout(timeoutId);
+        if (err.name === "AbortError") {
+            throw { status: 408, message: "Servidor demorou para responder. Tente novamente." };
+        }
+        throw err;
+    }
 }

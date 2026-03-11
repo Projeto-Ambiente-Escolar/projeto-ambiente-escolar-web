@@ -8,7 +8,6 @@
     width: 30vh;
     height: 30vh;
     background-color: rgb(255, 255, 255);
-    border: 0.3vh solid var(--azul-escuro);
 
     color: var(--azul-escuro);
 
@@ -17,4 +16,6 @@
     border-radius: 4vh;
     flex-direction: column;
     gap: 2vh ;
+
+    box-shadow: var(--shadow);
 }

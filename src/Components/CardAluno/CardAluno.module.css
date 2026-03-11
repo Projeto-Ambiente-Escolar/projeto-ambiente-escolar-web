@@ -8,7 +8,7 @@
     width: 30vh;
     height: 40vh;
     background-color: rgb(255, 255, 255);
-    filter: drop-shadow(0vh 0.8vh 0.7vh rgb(53, 53, 53));
+    box-shadow: var(--shadow);
 
     color: var(--cinza-escuro);
 
@@ -21,6 +21,7 @@
         width: 15vh;
         border-radius: 50%;
         margin-bottom: 3vh;
+        min-height: 15vh;
     }
 
     button {

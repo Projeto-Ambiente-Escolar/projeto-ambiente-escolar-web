@@ -15,7 +15,7 @@ import Desempenho from "../Desempenho/Desempenho";
 function Professor() {
 
     const cookieData = Cookies.get('usuario')
-    const professor = cookieData ? JSON.parse(cookieData) : { nome: '', foto: null }
+    const professor = cookieData ? JSON.parse(cookieData) : { id: 0, nome: '', foto: null }
 
     const location = useLocation()
 
@@ -27,6 +27,8 @@ function Professor() {
     const [aluno, setAluno] = useState()
     const [alunoDesempenho, setAlunoDesempenho] = useState(null)
 
+    const [att, setAtt] = useState(false)
+
     const aba = location.pathname
 
     useEffect(() => {
@@ -34,9 +36,10 @@ function Professor() {
         setTurma(0)
     }, [aba])
 
-    if (aba === "/professor") return <Navigate to="/turmas" replace />
+    if (aba === "/professor") return <Navigate to="/desempenho" replace />
 
-    const abrir = () => {
+    const abrir = (a) => {
+        setAluno(a)
         setMostrarCardNota(true)
     }
 
@@ -45,9 +48,13 @@ function Professor() {
         setTurma(id)
     }
 
-    const abrirRecado = (id) => {
-        setAluno(id)
+    const abrirRecado = (a) => {
+        setAluno(a)
         setMostrarCardRecado(true)
+    }
+
+    const atualizarAlunos = (d) => {
+        setAtt(d)
     }
 
     const abrirDesempenho = (aluno) => {
@@ -59,16 +66,10 @@ function Professor() {
         <div className="professor-body">
             <SideBar tipo="professor" nome={professor.nome} foto={professor.foto} />
             <div id="conteudo-professor">
-                {aba === "/turmas" && (
-                    !selecionar
-                        ? <Turmas definir={escolher}/>
-                        : <Notas idturma={turma} visualizar={abrir}/>
-                )}
-
                 {aba === "/lancar-notas" && (
                     !selecionar
                         ? <Turmas definir={escolher}/>
-                        : <Notas idturma={turma} visualizar={abrir}/>
+                        : <Notas idturma={turma} visualizar={abrir} atualizar={att} at={atualizarAlunos}/>
                 )}
 
                 {aba === "/desempenho" && <Desempenho abrir={abrirDesempenho}/>}
@@ -76,16 +77,9 @@ function Professor() {
                 {aba === "/recados" && <Recados abrir={abrirRecado}/>}
             </div>
 
-            {mostrarCardNota && <CardNota fechar={() => setMostrarCardNota(false)} />}
+            {mostrarCardNota && <CardNota atualizar={att} at={atualizarAlunos} aluno={aluno} fechar={() => setMostrarCardNota(false)} />}
 
-            {mostrarCardRecado && <CardRecado id={aluno} fechar={() => setMostrarCardRecado(false)} />}
-
-            {mostrarCardAluno && (
-                <CardDesempenho
-                    aluno={alunoDesempenho}
-                    fechar={() => setMostrarCardAluno(false)}
-                />
-            )}
+            {mostrarCardRecado && <CardRecado id={aluno.id} idprofessor={professor.id} nome={professor.nome} fechar={() => setMostrarCardRecado(false)} atualizar={() => {window.dispatchEvent(new Event("atualizarRecados"))}}/>}
         </div>
     )
 }

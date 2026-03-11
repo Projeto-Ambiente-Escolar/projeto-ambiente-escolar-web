@@ -9,7 +9,8 @@ import SolicitacaoCard from "./components/SolicitacaoCard";
 import ModalDetalhes from "./components/ModalDetalhes";
 import ModalCadastroAluno from "./components/ModalCadastroProfessor";
 import ModalSelecionarTurma from "./components/ModalSelecionarTurma";
-import { buscarAlunosPendentes, alterarStatus, buscarTurmas, vincularTurma } from "../../services/alunoService.js";
+import { buscarAlunosPendentes, alterarStatus, vincularTurma } from "../../services/alunoService.js";
+import {buscarTurmas} from "../../services/turmaService"
 
 
 function Secretaria() {
