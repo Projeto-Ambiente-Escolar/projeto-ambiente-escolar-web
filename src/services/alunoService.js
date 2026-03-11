@@ -42,7 +42,7 @@ export async function cadastrarAluno(dados) {
                 "accept": "*/*",
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ ...dados, status: "2", turma }),
+            body: JSON.stringify({ ...dados, status: "0", turma }),
             signal: controller.signal,
         });
 
@@ -60,6 +60,44 @@ export async function cadastrarAluno(dados) {
         if (err.name === "AbortError") {
             throw { status: 408, message: "Servidor demorou para responder. Tente novamente." };
         }
+        throw err;
+    }
+}
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+export async function buscarAlunosPendentes() {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/aluno/status/0`, {
+            method: "GET",
+            headers: {
+                "accept": "*/*",
+            },
+            signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw { status: response.status, ...data };
+        }
+
+        return data;
+    } catch (err) {
+        clearTimeout(timeoutId);
+
+        if (err.name === "AbortError") {
+            throw {
+                status: 408,
+                message: "Servidor demorou para responder. Tente novamente."
+            };
+        }
+
         throw err;
     }
 }
@@ -124,6 +162,65 @@ export async function buscarAluno(id) {
         }
         throw err;
     }
+}
+
+export async function alterarStatus(id, status) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/aluno/alterarStatus/${id}/${status}`, {
+            method: "PUT",
+            headers: {
+                "accept": "*/*",
+            },
+            signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        let data = null;
+
+        try {
+            data = await response.json();
+        } catch {
+            data = null;
+        }
+
+        if (!response.ok) {
+            throw { status: response.status, ...data };
+        }
+
+        return data;
+    } catch (err) {
+        clearTimeout(timeoutId);
+
+        if (err.name === "AbortError") {
+            throw {
+                status: 408,
+                message: "Servidor demorou para responder. Tente novamente."
+            };
+        }
+
+        throw err;
+    }
+}
+
+export async function vincularTurma(idAluno, idTurma) {
+
+    const response = await fetch(`${API_BASE_URL}/aluno/vincularTurma/${idAluno}/${idTurma}`, {
+        method: "PUT",
+        headers: {
+            "accept": "*/*"
+        }
+    });
+
+    if (!response.ok) {
+        const data = await response.json();
+        throw data;
+    }
+
+    return true;
 }
 
 export async function buscarAlunosComStatus(idprofessor, idserie) {

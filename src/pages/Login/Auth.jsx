@@ -66,51 +66,63 @@ function Auth() {
       setErroLogin(true)
       return
     }
-
+  
     setErroLogin(false)
     setCarregando(true)
-
+  
     try {
-      if (isAluno(credenciais)) {
+  
+      // 🔐 1️⃣ Verificação do Admin
+      if (credenciais === "AdminSecretario" && senha2 === "admin123") {
+        Cookies.set('usuario', JSON.stringify({ tipo: 'secretaria' }), { expires: 1 })
+        navigate('/secretaria') // crie essa rota depois
+        return
+      }
+  
+      // 🎓 2️⃣ Se contém "@", é aluno
+      if (credenciais.includes("@")) {
         const response = await fetch('/api/aluno/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: credenciais, senha: senha2 }),
         })
-
+  
         const text = await response.text()
         if (!response.ok || !text) throw new Error()
-
+  
         const data = JSON.parse(text)
         const { foto, ...dadosSemFoto } = data
         if (foto) localStorage.setItem('usuario_foto', foto)
         Cookies.set('usuario', JSON.stringify({ ...dadosSemFoto, tipo: 'aluno' }), { expires: 1 })
         mostrarToast('Login feito com sucesso', 'sucesso')
         setTimeout(() => navigate('/notas'), 1000)
-      } else {
-        const response = await fetch('/api/professor/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: credenciais, senha: senha2 }),
-        })
-
-        const text = await response.text()
-        if (!response.ok || !text) throw new Error()
-
-        const data = JSON.parse(text)
+        return
+      }
+  
+      // 👨‍🏫 3️⃣ Caso contrário, é professor
+      const response = await fetch('/api/professor/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: credenciais, senha: senha2 }),
+      })
+  
+      const text = await response.text()
+      if (!response.ok || !text) throw new Error()
+  
+      const data = JSON.parse(text)
         const { foto, ...dadosSemFoto } = data
         if (foto) localStorage.setItem('usuario_foto', foto)
-        Cookies.set('usuario', JSON.stringify({ ...dadosSemFoto, tipo: 'professor' }), { expires: 1 })
-        mostrarToast('Login feito com sucesso', 'sucesso')
+      Cookies.set('usuario', JSON.stringify({ ...dadosSemFoto, tipo: 'professor' }), { expires: 1 })
+      mostrarToast('Login feito com sucesso', 'sucesso')
         setTimeout(() => navigate('/turmas'), 1000)
-      }
+  
     } catch (err) {
       setErroLogin(true)
       mostrarToast('Não foi possível fazer o login', 'erro')
     } finally {
       setCarregando(false)
     }
-  }
+  }  
 
   const handleCadastro = async () => {
     const vazios = []

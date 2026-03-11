@@ -1,4 +1,5 @@
-import styles from "../Secretaria.module.css";
+import styles from "./ModalDetalhes.module.css";
+import FotoPadrao from "../../../../public/assets/foto_perfil_1.svg"
 
 function ModalDetalhes({ aluno, onClose }) {
     if (!aluno) return null;
@@ -6,19 +7,23 @@ function ModalDetalhes({ aluno, onClose }) {
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modalContainer}>
-                <h2 className={styles.modalTitulo}>
-                    Detalhes do Aluno
-                </h2>
-
-                <p><strong>Nome:</strong> {aluno.nome}</p>
-                <p><strong>Matrícula:</strong> {aluno.matricula}</p>
-
-                <button
+            <button
                     className={styles.modalBotaoFechar}
                     onClick={onClose}
                 >
-                    Fechar
-                </button>
+                X
+            </button>
+            
+            <img
+                src={aluno.foto && aluno.foto !== "" ? aluno.foto : FotoPadrao}
+                alt="Foto do aluno"
+                className={styles.modalFoto}
+            />
+                <div className={styles.modalTexts}>
+                    <p className={styles.modalNome}>{aluno.nome}</p>
+                    <p className={styles.modalMatricula}>Matrícula: {aluno.matricula}</p>
+                    <p className={styles.modalEmail}>{aluno.email}</p>
+                </div>
             </div>
         </div>
     );

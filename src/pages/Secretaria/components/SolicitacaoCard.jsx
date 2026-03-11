@@ -6,7 +6,9 @@ function SolicitacaoCard({
     matricula,
     selecionado,
     toggleSelecionado,
-    onDetalhes
+    onDetalhes,
+    onAprovar,
+    onReprovar
 }) {
     return (
         <div className={styles.solicitacaoAluno}>
@@ -31,8 +33,8 @@ function SolicitacaoCard({
 
             <div className={styles.btnsAluno}>
                 <button className={styles.btnDetalhes} onClick={onDetalhes}>Detalhes</button>
-                <button className={styles.btnAprovar}>Aprovar</button>
-                <button className={styles.btnReprovar}>Reprovar</button>
+                <button className={styles.btnAprovar} onClick={onAprovar}>Aprovar</button>
+                <button className={styles.btnReprovar} onClick={onReprovar}>Reprovar</button>
             </div>
         </div>
     );
