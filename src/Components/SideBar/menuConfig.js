@@ -37,5 +37,12 @@ export const menuConfig = {
             rota: "/recados",
             icon: "/assets/recado_icon.svg"
         },
+    ],
+    admin: [
+        {
+            label: "Aprovações",
+            rota: "/secretaria",
+            icon: "/assets/check-square-offset-bold.svg"
+        }
     ]
 };

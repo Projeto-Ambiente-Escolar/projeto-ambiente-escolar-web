@@ -1,0 +1,97 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(0, 0, 0, 0.4);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 1000;
+}
+
+.modal {
+    background: white;
+    border-radius: 10px;
+
+    width: 420px;
+    max-width: 90%;
+
+    padding: 30px;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.modal p {
+    text-align: center;
+    font-weight: 100;
+}
+
+.nomeAluno {
+    text-align: center;
+    text-transform: capitalize  ;
+    font-size: 20px;
+}
+
+.turmas {
+    display: grid;
+    grid-template-columns: repeat(2, 140px);
+    gap: 20px;
+}
+
+.turmaBtn {
+    padding: 12px;
+    
+
+    border: 1px solid #4692D1;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.turmaBtn:hover {
+    background: #4692D1;
+    color: white;
+}
+
+.turmaBtn:active {
+    background: #3a6aa2;
+}
+
+.cancelar {
+    border: none;
+    background: #D14646;
+    color: white;
+
+    padding: 10px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+    width: 301px;
+
+    font-weight: 600;
+}
+
+.cancelar:hover {
+    background: #ab3f33;
+}
+
+.cancelar:active {
+    background: #d14d4d;
+}

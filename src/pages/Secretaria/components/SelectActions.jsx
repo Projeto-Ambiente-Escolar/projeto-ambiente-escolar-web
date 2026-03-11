@@ -1,6 +1,7 @@
 import styles from "../Secretaria.module.css";
 
-function SelectActions({ selecionarTodos, todosSelecionados }) {
+function SelectActions({selecionarTodos, quantidadeSelecionados, todosSelecionados, onAprovarSelecionados, onReprovarSelecionados
+}) {
     return (
         <div id={styles.selectContainer}>
             <label className={styles.selectAllLabel}>
@@ -17,8 +18,8 @@ function SelectActions({ selecionarTodos, todosSelecionados }) {
             <h2>Selecionados:</h2>
 
             <div id={styles.selectAllButtons}>
-                <button className={styles.btnAprovar}>Aprovar</button>
-                <button className={styles.btnReprovar}>Reprovar</button>
+                <button className={styles.btnAprovar} onClick={onAprovarSelecionados}>Aprovar</button>
+                <button className={styles.btnReprovar} onClick={onReprovarSelecionados}>Reprovar</button>
             </div>
         </div>
     );

@@ -63,44 +63,56 @@ function Auth() {
       setErroLogin(true)
       return
     }
-
+  
     setErroLogin(false)
     setCarregando(true)
-
+  
     try {
-      if (isAluno(credenciais)) {
+  
+      // 🔐 1️⃣ Verificação do Admin
+      if (credenciais === "AdminSecretario" && senha2 === "admin123") {
+        Cookies.set('usuario', JSON.stringify({ tipo: 'secretaria' }), { expires: 1 })
+        navigate('/secretaria') // crie essa rota depois
+        return
+      }
+  
+      // 🎓 2️⃣ Se contém "@", é aluno
+      if (credenciais.includes("@")) {
         const response = await fetch('/api/aluno/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: credenciais, senha: senha2 }),
         })
-
+  
         const text = await response.text()
         if (!response.ok || !text) throw new Error()
-
+  
         const data = JSON.parse(text)
         Cookies.set('usuario', JSON.stringify({ ...data, tipo: 'aluno' }), { expires: 1 })
         navigate('/notas')
-      } else {
-        const response = await fetch('/api/professor/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: credenciais, senha: senha2 }),
-        })
-
-        const text = await response.text()
-        if (!response.ok || !text) throw new Error()
-
-        const data = JSON.parse(text)
-        Cookies.set('usuario', JSON.stringify({ ...data, tipo: 'professor' }), { expires: 1 })
-        navigate('/turmas')
+        return
       }
+  
+      // 👨‍🏫 3️⃣ Caso contrário, é professor
+      const response = await fetch('/api/professor/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: credenciais, senha: senha2 }),
+      })
+  
+      const text = await response.text()
+      if (!response.ok || !text) throw new Error()
+  
+      const data = JSON.parse(text)
+      Cookies.set('usuario', JSON.stringify({ ...data, tipo: 'professor' }), { expires: 1 })
+      navigate('/turmas')
+  
     } catch (err) {
       setErroLogin(true)
     } finally {
       setCarregando(false)
     }
-  }
+  }  
 
   const handleCadastro = async () => {
     const vazios = []

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { cadastrarAluno } from "../../../services/alunoService";
-import styles from "./ModalCadastroAluno.module.css";
+import styles from "./ModalCadastroProfessor.module.css";
 
 const camposIniciais = {
     nome: "",
@@ -97,7 +97,7 @@ function ModalCadastroAluno({ onClose, onCadastrado }) {
 
             <div className={styles.modal}>
                 <div className={styles.modalHeader}>
-                    <h2 className={styles.titulo}>Cadastrar Aluno</h2>
+                    <h2 className={styles.titulo}>Cadastrar Professor</h2>
                     <button className={styles.btnFecharX} onClick={onClose}>✕</button>
                 </div>
 
