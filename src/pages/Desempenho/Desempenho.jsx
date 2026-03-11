@@ -1,23 +1,43 @@
 import { useState, useEffect } from "react";
 import "./Desempenho.css";
 import Filtro from "../../../public/assets/filter_icon.svg";
+import { buscarTop3Alunos, buscarAlunosEmRecuperacao, buscarMediaNotas } from "../../services/notasService"
+import { buscarAluno } from "../../services/alunoService"
+import Cookies from "js-cookie";
 
-const mediaGeral = 7.645;
+// const mediaGeral = 7.645;
 
-const alunosAtencao = [
-  { nome: "Marcelo ne", media: 3.6 },
-  { nome: "Luan Melo", media: 3.9 },
-  { nome: "Ivo Sales", media: 4.8 },
-  { nome: "Eva Nunes", media: 5.0 },
-  { nome: "Noa Rios", media: 5.2 },
-  { nome: "leo lins", media: 5.3 },
-  { nome: "Marcelo ne", media: 3.6 },
-  { nome: "Luan Melo", media: 3.9 },
-  { nome: "Ivo Sales", media: 4.8 },
-  { nome: "Eva Nunes", media: 5.0 },
-  { nome: "Noa Rios", media: 5.2 },
-  { nome: "leo lins", media: 5.3 },
-];
+// const alunosAtencao = [
+//   { nome: "Marcelo ne", media: 3.6 },
+//   { nome: "Luan Melo", media: 3.9 },
+//   { nome: "Ivo Sales", media: 4.8 },
+//   { nome: "Eva Nunes", media: 5.0 },
+//   { nome: "Noa Rios", media: 5.2 },
+//   { nome: "leo lins", media: 5.3 },
+//   { nome: "Marcelo ne", media: 3.6 },
+//   { nome: "Luan Melo", media: 3.9 },
+//   { nome: "Ivo Sales", media: 4.8 },
+//   { nome: "Eva Nunes", media: 5.0 },
+//   { nome: "Noa Rios", media: 5.2 },
+//   { nome: "leo lins", media: 5.3 },
+// ];
+
+// function alunosAtencaoAPI(){
+//   useEffect(() => {
+//           buscarAlunosEmRecuperacao()
+//               .then((data) => {
+//                   setAlunosAtencao(data);
+//               })
+//               .catch(() => {
+//                   setErro("Erro ao carregar os alunos em atenção. Tente novamente.");
+//               })
+//               .finally(() => {
+//                   setCarregando(false);
+//               });
+//       });
+
+//   return 
+// };
 
 const alunosDestaque = [
   { nome: "Lara Mota", nota: 9.6, posicao: 2 },
@@ -41,7 +61,19 @@ const getAno = (turma) => {
 
 const ordemPodio = [2, 1, 3];
 
-function AvatarIcon({ size = 52, color = "#b0bec5" }) {
+function AvatarIcon({ size = 52, color = "#b0bec5", foto }) {
+
+  if (foto) {
+    return (
+      <img
+        src={`${foto}`}
+        width={size}
+        height={size}
+        style={{ borderRadius: "50%", objectFit: "cover" }}
+      />
+    );
+  }
+
   return (
     <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
       <circle cx="24" cy="24" r="24" fill={color + "22"} />
@@ -91,8 +123,57 @@ function Circulo({ value, max = 10 }) {
 }
 
 export default function Desempenho({abrir}) {
+  const cookieData = Cookies.get('usuario')
+      const usuario = cookieData ? JSON.parse(cookieData) : { nome: '', foto: null, id: null }
+  
+      const [alunosAtencao, setAlunosAtencao] = useState([])
+      const [mediaGeral, setMediaGeral] = useState(0)
+      const [mostrarCardAluno, setMostrarCardAluno] = useState(false)
+      const [carregando, setCarregando] = useState(true);
+      const [erro, setErro] = useState(null);
+
   const [mostrarDropdown, setMostrarDropdown] = useState(false);
   const [filtroAno, setFiltroAno] = useState(1);
+
+  useEffect(() => {
+    if(!usuario.id) return;
+
+    console.log("OIIIIIIIIII")
+    buscarMediaNotas(usuario.id)
+      .then((data) => {
+        setMediaGeral(data);
+      })
+      .catch(() => {
+        setErro("Erro ao carregar a média de notas. Tente novamente.");
+      })
+      .finally(() => {
+        setCarregando(false);
+      });
+  }, [usuario.id]);
+
+  useEffect(() => {
+    console.log("usuario:", usuario)
+    if (!usuario.id) return;
+
+    buscarAlunosEmRecuperacao(usuario.id)
+      .then((data) => {
+        console.log("RECUPERACAO:", data)
+        setAlunosAtencao(
+          data.map((a) => ({
+            id: a.cmatricula,
+            nome: a.cnmAluno,
+            media: a.nmedia,
+            foto: a.cfoto
+          }))
+        );
+      })
+      .catch(() => {
+        setErro("Erro ao carregar os alunos em atenção. Tente novamente.");
+      })
+      .finally(() => {
+        setCarregando(false);
+      });
+  }, [usuario.id]);
 
    const mediasFiltradas = filtroAno === 0
     ? mediasTurmaSemData
@@ -129,13 +210,24 @@ export default function Desempenho({abrir}) {
           </div>
           <p className="card-subtitle">Necessitam acompanhamento — média menor que 7</p>
           <div className={`atencao-list ${alunosAtencao.length > 5 ? "scrollavel" : ""}`}>
-            {alunosAtencao.map((a) => (
-              <div className="aluno-item" key={a.nome} onClick={() => abrir(a)} style={{ cursor: "pointer" }}>
-                <AvatarIcon size={56} color="#90a4ae" />
-                <span className="aluno-nome">{a.nome}</span>
-                <span className="aluno-media atencao">{a.media}</span>
-              </div>
-            ))}
+            {carregando ? (
+              <p>Carregando alunos...</p>
+            ) : alunosAtencao.length === 0 ? (
+              <p className="nenhum-aluno">Nenhum aluno em recuperação 🎉</p>
+            ) : (
+              alunosAtencao.map((a) => (
+                <div
+                  className="aluno-item"
+                  key={a.id || a.nome}
+                  onClick={() => abrir(a)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <AvatarIcon className="aluno-media atencao" foto={a.foto} />
+                  <span className="aluno-nome">{a.nome}</span>
+                  <span className="aluno-media atencao">{a.media}</span>
+                </div>
+              ))
+            )}
           </div>
         </div>
 
