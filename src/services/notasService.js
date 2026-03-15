@@ -34,7 +34,7 @@ export async function buscarTop3Alunos(idProfessor) {
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-        const response = await fetch(`/api/notas/buscarTot3Alunos/${idProfessor}`, {
+        const response = await fetch(`/api/notas/buscarTop3Alunos/${idProfessor}`, {
             method: "GET",
             headers: {
                 "accept": "*/*",
