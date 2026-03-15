@@ -1,11 +1,11 @@
-const BASE_URL = "https://api-ambiente-escolar-sql-1.onrender.com/turma";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export async function buscarTurmas() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-        const response = await fetch(`${BASE_URL}/listar`, {            
+        const response = await fetch(`${API_BASE_URL}/listar`, {            
             method: "GET",
             headers: {
                 "accept": "*/*",

@@ -107,7 +107,7 @@ export async function buscarAlunos() {
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-        const response = await fetch(`${BASE_URL}/aluno/selecionarTodos`, {
+        const response = await fetch(`${API_BASE_URL}/aluno/selecionarTodos`, {
             method: "GET",
             headers: {
                 "accept": "*/*",
@@ -138,7 +138,7 @@ export async function buscarAluno(id) {
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-        const response = await fetch(`${BASE_URL}/aluno/${id}`, {
+        const response = await fetch(`${API_BASE_URL}/aluno/${id}`, {
             method: "GET",
             headers: {
                 "accept": "*/*",
@@ -228,7 +228,7 @@ export async function buscarAlunosComStatus(idprofessor, idserie) {
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-        const response = await fetch(`${BASE_URL}/aluno/listarAlunosComStatusDaMateria/${idprofessor}/${idserie}`, {
+        const response = await fetch(`${API_BASE_URL}/aluno/listarAlunosComStatusDaMateria/${idprofessor}/${idserie}`, {
             method: "GET",
             headers: {
                 "accept": "*/*",

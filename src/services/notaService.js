@@ -1,11 +1,11 @@
-const BASE_URL = "https://api-ambiente-escolar-sql-1.onrender.com";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export async function buscarNotasTurma(idAluno, idProfessor) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-        const response = await fetch(`/notas/${idAluno}/${idProfessor}`, {
+        const response = await fetch(`${API_BASE_URL}/notas/${idAluno}/${idProfessor}`, {
             method: "GET",
             headers: {
                 "accept": "*/*",
@@ -36,7 +36,7 @@ export async function cadastrarNota(dados) {
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-        const response = await fetch(`${BASE_URL}/notas/inserirNota`, {
+        const response = await fetch(`${API_BASE_URL}/notas/inserirNota`, {
             method: "POST",
             headers: {
                 "accept": "*/*",
