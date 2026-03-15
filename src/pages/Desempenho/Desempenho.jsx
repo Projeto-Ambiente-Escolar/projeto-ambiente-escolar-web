@@ -1,38 +1,10 @@
 import { useState, useEffect } from "react";
 import "./Desempenho.css";
 import Filtro from "../../../public/assets/filter_icon.svg";
-
-const mediaGeral = 7.645;
-
-const alunosAtencao = [
-  { nome: "Marcelo ne", media: 3.6 },
-  { nome: "Luan Melo", media: 3.9 },
-  { nome: "Ivo Sales", media: 4.8 },
-  { nome: "Eva Nunes", media: 5.0 },
-  { nome: "Noa Rios", media: 5.2 },
-  { nome: "leo lins", media: 5.3 },
-  { nome: "Marcelo ne", media: 3.6 },
-  { nome: "Luan Melo", media: 3.9 },
-  { nome: "Ivo Sales", media: 4.8 },
-  { nome: "Eva Nunes", media: 5.0 },
-  { nome: "Noa Rios", media: 5.2 },
-  { nome: "leo lins", media: 5.3 },
-];
-
-const alunosDestaque = [
-  { nome: "Lara Mota", nota: 9.6, posicao: 2 },
-  { nome: "Ana Silva", nota: 10, posicao: 1 },
-  { nome: "Bia Luz", nota: 9.4, posicao: 3 },
-];
-
-const mediasTurmaSemData = [
-  { turma: "1ºC", media: 5},
-  { turma: "1ºD", media: 8},
-  { turma: "2ºA", media: 15},
-  { turma: "3ºA", media: 12},
-  { turma: "2ºB", media: 11},
-  { turma: "1ºB", media: 20},
-];
+import { buscarTop3Alunos, buscarAlunosEmRecuperacao, buscarMediaNotas } from "../../services/notasService"
+import { buscarNotasAlunosPorTurma } from "../../services/turmaService"
+import CardDesempenho from "../../Components/CardDesempenho/CardDesempenho"
+import Cookies from "js-cookie";
 
 const getAno = (turma) => {
   const match = turma.match(/^(\d)/);
@@ -41,7 +13,15 @@ const getAno = (turma) => {
 
 const ordemPodio = [2, 1, 3];
 
-function AvatarIcon({ size = 52, color = "#b0bec5" }) {
+function AvatarIcon({ size = 52, color = "#b0bec5", foto }) {
+  if (foto) {
+    const src = foto.startsWith("http")
+      ? foto
+      : `data:image/jpeg;base64,${foto}`;
+    return (
+      <img src={src} width={size} height={size} style={{ borderRadius: "50%", objectFit: "cover" }} />
+    );
+  }
   return (
     <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
       <circle cx="24" cy="24" r="24" fill={color + "22"} />
@@ -84,21 +64,99 @@ function Circulo({ value, max = 10 }) {
         </linearGradient>
       </defs>
       <text x="90" y="97" textAnchor="middle" className="donut-label">
-        {value.toFixed(3)}
-      </text> 
+        {value.toFixed(2)}
+      </text>
     </svg>
   );
 }
 
-export default function Desempenho({abrir}) {
+export default function Desempenho() {
+  const cookieData = Cookies.get('usuario')
+  const usuario = cookieData ? JSON.parse(cookieData) : { nome: '', foto: null, id: null }
+
+  const [alunosAtencao, setAlunosAtencao] = useState([])
+  const [alunosDestaque, setAlunosDestaque] = useState([])
+  const [mediasTurma, setMediasTurma] = useState([]);
+  const [mediaGeral, setMediaGeral] = useState(0)
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState(null);
+
+  const [mostrarCard, setMostrarCard] = useState(false)
+  const [alunoSelecionado, setalunoSelecionado] = useState(null)
+
   const [mostrarDropdown, setMostrarDropdown] = useState(false);
   const [filtroAno, setFiltroAno] = useState(1);
 
-   const mediasFiltradas = filtroAno === 0
-    ? mediasTurmaSemData
-    : mediasTurmaSemData.filter((t) => getAno(t.turma) === filtroAno);
+const abrirCard = (idAluno, foto) => {
+    setalunoSelecionado({ id: idAluno, foto })
+    setMostrarCard(true)
+}
 
-  const maxMedia = Math.max(...mediasFiltradas.map((t) => t.media));
+  useEffect(() => {
+    if (!usuario.id) return;
+
+    const turmaIds = Array.from({ length: 10 }, (_, i) => i + 1);
+
+    Promise.all(
+      turmaIds.map((turmaId) =>
+        buscarNotasAlunosPorTurma(usuario.id, turmaId)
+          .then((data) => {
+            if (!data?.cnmTurma) return null;
+            return {
+              turma: `${data.iserie}º${data.cnmTurma}`,
+              media: data.nmedia ?? 0
+            };
+          })
+          .catch(() => null)
+      )
+    ).then((resultado) => {
+      setMediasTurma(resultado.filter(Boolean));
+    });
+  }, [usuario.id]);
+  
+
+  useEffect(() => {
+    if (!usuario.id) return;
+    buscarMediaNotas(usuario.id)
+      .then((data) => { setMediaGeral(data); })
+      .catch(() => { setErro("Erro ao carregar a média de notas. Tente novamente."); })
+      .finally(() => { setCarregando(false); });
+  }, [usuario.id]);
+
+  useEffect(() => {
+    if (!usuario.id) return;
+    buscarAlunosEmRecuperacao(usuario.id)
+      .then((data) => {
+        setAlunosAtencao(data.map((a) => ({
+          id: a.cmatricula,
+          nome: a.cnmAluno,
+          media: a.nmedia,
+          foto: a.cfoto
+        })));
+      })
+      .catch(() => { setErro("Erro ao carregar os alunos em atenção. Tente novamente."); })
+      .finally(() => { setCarregando(false); });
+  }, [usuario.id]);
+
+  useEffect(() => {
+    if (!usuario.id) return;
+    buscarTop3Alunos(usuario.id)
+      .then((data) => {
+        setAlunosDestaque(data.map((a, index) => ({
+          id: a.cmatricula,
+          nome: a.cnmAluno,
+          media: a.nmedia,
+          foto: a.cfoto,
+          posicao: index + 1
+        })));
+      })
+      .catch(() => { setErro("Erro ao carregar os alunos em destaque. Tente novamente."); })
+      .finally(() => { setCarregando(false); });
+  }, [usuario.id]);
+
+  const mediasFiltradas = filtroAno === 0
+    ? mediasTurma
+    : mediasTurma.filter((t) => getAno(t.turma) === filtroAno);
 
   const selecionarAno = (ano) => {
     setFiltroAno(ano);
@@ -115,10 +173,14 @@ export default function Desempenho({abrir}) {
 
         {/* Média Geral */}
         <div className="card card-media-geral">
-          <p className="card-label">Média Geral</p>
+        <p className="card-label">Média Geral</p>
+        {carregando ? (
+          <div className="cardLoading"><div className="spinner" /></div>
+        ) : (
           <div className="donut-wrapper">
             <Circulo value={mediaGeral} max={10} />
           </div>
+        )}
         </div>
 
         {/* Atenção */}
@@ -129,13 +191,24 @@ export default function Desempenho({abrir}) {
           </div>
           <p className="card-subtitle">Necessitam acompanhamento — média menor que 7</p>
           <div className={`atencao-list ${alunosAtencao.length > 5 ? "scrollavel" : ""}`}>
-            {alunosAtencao.map((a) => (
-              <div className="aluno-item" key={a.nome} onClick={() => abrir(a)} style={{ cursor: "pointer" }}>
-                <AvatarIcon size={56} color="#90a4ae" />
-                <span className="aluno-nome">{a.nome}</span>
-                <span className="aluno-media atencao">{a.media}</span>
-              </div>
-            ))}
+          {carregando ? (
+            <div className="cardLoading"><div className="spinner" /></div>
+          ) : alunosAtencao.length === 0 ? (
+            <p className="nenhum-aluno">Nenhum aluno em recuperação 🎉</p>
+          ) : (
+              alunosAtencao.map((a) => (
+                <div
+                  className="aluno-item"
+                  key={a.id || a.nome}
+                  onClick={() => abrirCard(a.id, a.foto)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <AvatarIcon foto={a.foto} />
+                  <span className="aluno-nome">{a.nome}</span>
+                  <span className="aluno-media atencao">{a.media}</span>
+                </div>
+              ))
+            )}
           </div>
         </div>
 
@@ -146,18 +219,27 @@ export default function Desempenho({abrir}) {
             <h2>Alunos em destaque</h2>
           </div>
           <div className="podio">
-            {[...alunosDestaque]
-              .sort((a, b) => ordemPodio.indexOf(a.posicao) - ordemPodio.indexOf(b.posicao))
-              .map((a) => (
-                <div className={`podio-col pos-${a.posicao}`} key={a.nome} onClick={() => abrir(a)} style={{ cursor: "pointer" }}>
-                  <AvatarIcon size={48} color="#78909c" />
-                  <span className="podio-nome">{a.nome}</span>
-                  <span className="podio-nota">{a.nota}</span>
-                  <div className={`podio-bar pos-${a.posicao}`}>
-                    <span className="podio-rank">{a.posicao}</span>
+            {carregando ? (
+              <div className="cardLoading"><div className="spinner" /></div>
+            ) : (
+              [...alunosDestaque]
+                .sort((a, b) => ordemPodio.indexOf(a.posicao) - ordemPodio.indexOf(b.posicao))
+                .map((a) => (
+                  <div
+                    className={`podio-col pos-${a.posicao}`}
+                    key={a.id}
+                    onClick={() => abrirCard(a.id, a.foto)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <AvatarIcon size={48} color="#78909c" foto={a.foto} />
+                    <span className="podio-nome">{a.nome}</span>
+                    <span className="podio-nota">{a.media}</span>
+                    <div className={`podio-bar pos-${a.posicao}`}>
+                      <span className="podio-rank">{a.posicao}</span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+            )}
           </div>
         </div>
 
@@ -178,14 +260,16 @@ export default function Desempenho({abrir}) {
           </div>
 
           <div className="bar-chart">
-            {mediasFiltradas.length === 0 ? (
-              <p className="turmas-vazio">Nenhuma turma encontrada.</p>
-            ) : (
+          {carregando ? (
+            <div className="cardLoading"><div className="spinner" /></div>
+          ) : mediasFiltradas.length === 0 ? (
+            <p className="turmas-vazio">Nenhuma turma encontrada.</p>
+          ) : (
               mediasFiltradas.map((t) => (
                 <div className="bar-row" key={t.turma}>
                   <span className="bar-label">{t.turma}</span>
                   <div className="bar-track">
-                    <div className="bar-fill" style={{ "--bar-width": `${(t.media / maxMedia) * 100}%` }} />
+                    <div className="bar-fill" style={{ "--bar-width": `${(t.media / 10) * 100}%` }} />
                   </div>
                   <span className="bar-value">{t.media}</span>
                 </div>
@@ -195,6 +279,16 @@ export default function Desempenho({abrir}) {
         </div>
 
       </div>
+
+      {/* Card Aluno */}
+      {mostrarCard && alunoSelecionado && (
+        <CardDesempenho
+            idAluno={alunoSelecionado.id}
+            idUsuario={usuario.id}
+            foto={alunoSelecionado.foto}
+            fechar={() => setMostrarCard(false)}
+        />
+      )}
     </div>
   );
 }

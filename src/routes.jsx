@@ -83,7 +83,7 @@ function AppRoutes() {
           path="/desempenho"
           element={
             <PrivateRoute allowedRoles={["professor"]}>
-              <Desempenho />
+              <Professor />
             </PrivateRoute>
           }
         />

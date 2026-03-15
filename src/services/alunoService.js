@@ -71,7 +71,7 @@ export async function buscarAlunosPendentes() {
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-        const response = await fetch(`${API_BASE_URL}/aluno/status/0`, {
+        const response = await fetch(`/api/aluno/status/0`, {
             method: "GET",
             headers: {
                 "accept": "*/*",
@@ -164,12 +164,48 @@ export async function buscarAluno(id) {
     }
 }
 
+export async function buscarNotasAluno(idAluno, idProfessor) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+    try {
+        const response = await fetch(`/api/aluno/buscarNotasAluno/${parseInt(idAluno)}/${idProfessor}?idAluno=${parseInt(idAluno)}&idProfessor=${idProfessor}`, {
+            method: "GET",
+            headers: {
+                "accept": "*/*",
+            },
+            signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        // ← trata body vazio antes de tentar parsear
+        const text = await response.text()
+        if (!text) return null
+
+        const data = JSON.parse(text)
+
+        if (!response.ok) {
+            throw { status: response.status, ...data };
+        }
+
+        console.log("return do método buscarNotasAluno: ", data)
+        return data;
+    } catch (err) {
+        clearTimeout(timeoutId);
+        if (err.name === "AbortError") {
+            throw { status: 408, message: "Servidor demorou para responder. Tente novamente." };
+        }
+        throw err;
+    }
+}
+
 export async function alterarStatus(id, status) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-        const response = await fetch(`${API_BASE_URL}/aluno/alterarStatus/${id}/${status}`, {
+        const response = await fetch(`/api/aluno/alterarStatus/${id}/${status}`, {
             method: "PUT",
             headers: {
                 "accept": "*/*",
@@ -208,7 +244,7 @@ export async function alterarStatus(id, status) {
 
 export async function vincularTurma(idAluno, idTurma) {
 
-    const response = await fetch(`${API_BASE_URL}/aluno/vincularTurma/${idAluno}/${idTurma}`, {
+    const response = await fetch(`/api/aluno/vincularTurma/${idAluno}/${idTurma}`, {
         method: "PUT",
         headers: {
             "accept": "*/*"
