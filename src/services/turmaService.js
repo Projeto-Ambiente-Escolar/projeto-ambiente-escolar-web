@@ -5,7 +5,7 @@ export async function buscarTurmas() {
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-        const response = await fetch(`${API_BASE_URL}/listar`, {            
+        const response = await fetch(`${API_BASE_URL}/turma/listar`, {            
             method: "GET",
             headers: {
                 "accept": "*/*",
