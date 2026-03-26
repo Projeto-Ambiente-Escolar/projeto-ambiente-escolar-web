@@ -437,3 +437,31 @@ html, body {
     grid-row: auto;
   }
 }
+
+/* ── carregando ── */
+.loadingWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.spinner {
+    width: 6vh;
+    height: 6vh;
+    border: 0.5vh solid #e2e8f0;
+    border-top-color: var(--azul-escuro, #1d6fa4);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.cardLoading {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
