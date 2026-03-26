@@ -1,0 +1,280 @@
+/* ── Layout principal com sidebar ───────────── */
+.adminContainer {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.adminContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #f5f7fb;
+}
+
+/* ── Header superior ───────────────────────── */
+.topHeader {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 1.5vh 3vh;
+    background-color: white;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 2vh;
+    font-weight: 500;
+    color: var(--azul-escuro);
+}
+
+/* ── Conteúdo interno ─────────────────────── */
+.content {
+    padding: 3vh 4vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5vh;
+}
+
+/* ── Header da tabela ─────────────────────── */
+.headerTabela {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.headerTabela h1 {
+    font-size: 3vh;
+    color: var(--azul-escuro);
+}
+
+/* ── Botão principal ─────────────────────── */
+.btnCadastrarProfessor {
+    padding: 1.2vh 2.5vh;
+    border-radius: 2vh;
+    border: none;
+    background-color: var(--azul-escuro);
+    color: white;
+    font-size: 2vh;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btnCadastrarProfessor:hover {
+    background-color: #4082b8;
+}
+
+/* ── Card da tabela ───────────────────────── */
+.tabelaContainer {
+    background: white;
+    border-radius: 2vh;
+    padding: 2vh;
+    box-shadow: 0 0.5vh 2vh rgba(0,0,0,0.08);
+}
+
+/* ── Tabela ─────────────────────────────── */
+.tabela {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabela th {
+    text-align: left;
+    font-size: 1.9vh;
+    color: #777;
+    padding: 1.5vh;
+    border-bottom: 1px solid #eee;
+}
+
+.tabela td {
+    padding: 1.8vh 1.5vh;
+    font-size: 2vh;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.tabela tr:hover {
+    background: #f9fbff;
+}
+
+/* ── Botões de ação ───────────────────────── */
+.btnEditar {
+    background: #eaf4ff;
+    color: var(--azul-escuro);
+    border: none;
+    padding: 0.8vh 1.5vh;
+    border-radius: 1vh;
+    cursor: pointer;
+    font-size: 1.8vh;
+    margin-right: 1vh;
+}
+
+.btnEditar:hover {
+    background: #d6eaff;
+}
+
+.btnExcluir {
+    background: #fff0f0;
+    color: #D14646;
+    border: none;
+    padding: 0.8vh 1.5vh;
+    border-radius: 1vh;
+    cursor: pointer;
+    font-size: 1.8vh;
+}
+
+.btnExcluir:hover {
+    background: #ffe2e2;
+}
+
+/* ── Overlay ───────────────────────────── */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+/* ── Card do modal ─────────────────────── */
+.modal {
+    background: white;
+    border-radius: 2vh;
+    padding: 3vh;
+    width: 100%;
+    max-width: 50vh;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+
+    box-shadow: 0 1vh 3vh rgba(0, 0, 0, 0.2);
+    animation: fadeInScale 0.2s ease;
+}
+
+/* ── Header ───────────────────────────── */
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titulo {
+    font-size: 2.6vh;
+    font-weight: bold;
+    color: var(--azul-escuro);
+}
+
+.btnFecharX {
+    background: none;
+    border: none;
+    font-size: 2.5vh;
+    cursor: pointer;
+    color: #999;
+}
+
+.btnFecharX:hover {
+    color: #D14646;
+}
+
+/* ── Formulário ───────────────────────── */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vh;
+}
+
+.grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vh;
+}
+
+.label {
+    font-size: 1.8vh;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Inputs padrão sistema */
+.input {
+    padding: 1.2vh;
+    border-radius: 1vh;
+    border: 1px solid #ccc;
+    font-size: 1.9vh;
+    transition: 0.2s;
+}
+
+.input:focus {
+    border-color: var(--azul-escuro);
+    box-shadow: 0 0 0 0.2vh rgba(64, 130, 184, 0.15);
+    outline: none;
+}
+
+.inputErro {
+    border-color: #D14646 !important;
+    background: #fff8f8;
+}
+
+/* ── Ações ───────────────────────────── */
+.acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1vh;
+    margin-top: 1vh;
+}
+
+.btnCancelar {
+    padding: 1vh 2vh;
+    border-radius: 1vh;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+}
+
+.btnCancelar:hover {
+    background: #f5f5f5;
+}
+
+.btnCadastrar {
+    padding: 1vh 2vh;
+    border-radius: 1vh;
+    border: none;
+    background: var(--azul-escuro);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btnCadastrar:hover {
+    background: #4082b8;
+}
+
+/* ── Popup erro ───────────────────────── */
+.popupErro {
+    background: #fff0f0;
+    border: 1px solid #D14646;
+    color: #D14646;
+    padding: 1vh;
+    border-radius: 1vh;
+    font-size: 1.8vh;
+}
+
+/* ── Animação ───────────────────────── */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

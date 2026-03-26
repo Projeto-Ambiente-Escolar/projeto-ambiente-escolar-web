@@ -7,7 +7,6 @@ import SearchBar from "./components/SearchBar";
 import SelectActions from "./components/SelectActions";
 import SolicitacaoCard from "./components/SolicitacaoCard";
 import ModalDetalhes from "./components/ModalDetalhes";
-import ModalCadastroAluno from "./components/ModalCadastroProfessor";
 import ModalSelecionarTurma from "./components/ModalSelecionarTurma";
 import { buscarAlunosPendentes, alterarStatus, vincularTurma } from "../../services/alunoService.js";
 import {buscarTurmas} from "../../services/turmaService"
@@ -210,12 +209,6 @@ function Secretaria() {
                     setInputBusca={setInputBusca}
                     onBuscar={handleBuscar}
                 />
-                {/* <button
-                    className={styles.btnCadastrarProfessor}
-                    onClick={() => setModalCadastroAberto(true)}
-                >
-                    + Cadastrar Professor
-                </button> */}
             </div>
 
             <SelectActions
@@ -262,11 +255,6 @@ function Secretaria() {
                 />
             )}
 
-            {modalCadastroAberto && (
-                <ModalCadastroAluno
-                    onClose={() => setModalCadastroAberto(false)}
-                />
-            )}
             </div>
 
             {modalTurmaAberto && alunoAprovacaoAtual && (
