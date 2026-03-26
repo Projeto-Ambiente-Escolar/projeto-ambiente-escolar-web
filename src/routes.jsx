@@ -8,6 +8,7 @@ import Disciplinas from "./pages/Aluno/Disciplinas";
 import Desempenho from "./pages/Desempenho/Desempenho";
 import PrivateRoute from "./routes/PrivateRoute";
 import AcessoNegado from "./pages/AcessoNegado/AcessoNegado";
+import GestaoProfessor from "./pages/GestaoProfessor/GestaoProfessor";
 
 function AppRoutes() {
   return (
@@ -93,6 +94,15 @@ function AppRoutes() {
           element={
             <PrivateRoute allowedRoles={["secretaria"]}>
               <Secretaria />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/gestaoProfessor"
+          element={
+            <PrivateRoute allowedRoles={["secretaria"]}>
+              <GestaoProfessor />
             </PrivateRoute>
           }
         />

@@ -38,6 +38,11 @@ export const menuConfig = {
             label: "Aprovações",
             rota: "/secretaria",
             icon: "/assets/check-square-offset-bold.svg"
+        },
+        {
+            label: "Gestão de Professores",
+            rota: "/gestaoProfessor",
+            icon: "/assets/clipboard-text.svg"
         }
     ]
 };
