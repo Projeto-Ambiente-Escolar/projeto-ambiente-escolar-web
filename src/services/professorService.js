@@ -36,7 +36,7 @@ export async function cadastrarProfessor(dados) {
     const timeoutId = setTimeout(() => controller.abort(), 15000); 
 
     try {
-        const response = await fetch(`${BASE_URL}/professor/criar`, {
+        const response = await fetch(`${API_BASE_URL}/professor/criar`, {
             method: "POST",
             headers: {
                 "accept": "*/*",
@@ -69,7 +69,7 @@ export async function listarProfessores(){
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-        const response = await fetch(`${BASE_URL}/professor/listar`, {
+        const response = await fetch(`${API_BASE_URL}/professor/listar`, {
             method: "GET",
             headers: {
                 "accept": "*/*",
